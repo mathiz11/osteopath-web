@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon, Menu } from "semantic-ui-react";
+import { useStore } from "./Store";
 
 const Navbar: React.FC = () => {
-  const connected = React.useMemo(() => true, []);
+  const [state] = useStore();
 
   const path = window.location.pathname;
 
@@ -17,7 +18,7 @@ const Navbar: React.FC = () => {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right">
-          {connected ? (
+          {state.isAuth ? (
             <>
               <Menu.Item active={path === "/profile"}>
                 <Link to="/profile">
