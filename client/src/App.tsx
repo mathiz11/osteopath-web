@@ -1,19 +1,13 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import { Store } from "./components/Store";
+import Routes from "./components/Routes";
 
+import "./App.css";
 import "semantic-ui-css/semantic.min.css";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
-      </Switch>
-    </BrowserRouter>
-  );
-}
+const App = () => (
+  <Store>
+    <Routes />
+  </Store>
+);
 
 export default App;
