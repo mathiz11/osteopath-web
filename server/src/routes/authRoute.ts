@@ -32,10 +32,10 @@ router.post(
           });
           res.json({ message: "log in successfully" });
         } else {
-          res.status(401).json({ message: "login or password incorrect" });
+          res.status(403).json({ message: "login or password incorrect" });
         }
       } else {
-        res.status(401).json({ message: "login or password incorrect" });
+        res.status(403).json({ message: "login or password incorrect" });
       }
     } else {
       res.status(400).json({ message: "provide email and password" });
@@ -43,13 +43,42 @@ router.post(
   }
 );
 
-router.post(
-  "/refresh-token",
-  body("refreshToken").notEmpty(),
-  checkErrors,
-  async (req, res) => {
-    const refreshToken = req.body.refreshToken;
+// Method with refresh token in request
 
+// router.post(
+//   "/refresh-token",
+//   body("refreshToken").notEmpty(),
+//   checkErrors,
+//   async (req, res) => {
+//     const refreshToken = req.body.refreshToken;
+
+//     try {
+//       let payload: any = verify(
+//         refreshToken,
+//         process.env.REFRESH_TOKEN_SECRET!
+//       );
+
+//       const user = await User.findOne({ id: payload.id });
+
+//       if (user) {
+//         if (user.tokenVersion === payload.tokenVersion) {
+//           res.json({ accessToken: createAccessToken(user) });
+//         } else {
+//           res.status(406).json({ message: "sorry hacker" });
+//         }
+//       } else {
+//         res.status(500).json({ message: "token is linked to any user" });
+//       }
+//     } catch (e) {
+//       res.status(403).json({ message: "refresh token expired" });
+//     }
+//   }
+// );
+
+router.get("/refresh-token", async (req, res) => {
+  const refreshToken = req.cookies["refresh-token"];
+
+  if (refreshToken) {
     try {
       let payload: any = verify(
         refreshToken,
@@ -60,7 +89,10 @@ router.post(
 
       if (user) {
         if (user.tokenVersion === payload.tokenVersion) {
-          res.json({ accessToken: createAccessToken(user) });
+          res.cookie("access-token", createAccessToken(user), {
+            httpOnly: true,
+          });
+          res.status(200);
         } else {
           res.status(406).json({ message: "sorry hacker" });
         }
@@ -68,10 +100,12 @@ router.post(
         res.status(500).json({ message: "token is linked to any user" });
       }
     } catch (e) {
-      res.status(403).json({ message: "refresh token expired" });
+      res.status(401);
     }
+  } else {
+    res.status(401);
   }
-);
+});
 
 router.get("/logout", (_req, res) => {
   res.clearCookie("access-token");

@@ -1,20 +1,40 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-export const isAuth = (req: Request, res: Response, next: NextFunction) => {
-  const authorization = req.headers["authorization"];
+// Method with access token in headers
 
-  if (authorization) {
+// export const isAuth = (req: Request, res: Response, next: NextFunction) => {
+//   const authorization = req.headers["authorization"];
+
+//   if (authorization) {
+//     try {
+//       const token = authorization.split(" ")[1];
+//       const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+//       req.user = payload as any;
+//       next();
+//     } catch (err) {
+//       console.error(err);
+//       res.status(401).send({ message: "not authenticated" });
+//     }
+//   } else {
+//     res.status(401).send({ message: "not authenticated" });
+//   }
+// };
+
+export const isAuth = (req: Request, res: Response, next: NextFunction) => {
+  const accessToken = req.cookies["access-token"];
+
+  if (accessToken) {
     try {
-      const token = authorization.split(" ")[1];
-      const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+      const payload = verify(accessToken, process.env.ACCESS_TOKEN_SECRET!);
       req.user = payload as any;
       next();
     } catch (err) {
-      console.error(err);
-      res.status(403).send("not authenticated");
+      res.status(401);
+      next("not auth");
     }
   } else {
-    res.status(403).send("not authenticated");
+    res.status(401);
+    next("not auth");
   }
 };
