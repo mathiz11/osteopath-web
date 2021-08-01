@@ -11,7 +11,7 @@ let router = express.Router();
 
 router.post(
   "/login",
-  body("email").isLength({ max: 100 }),
+  body("email").isEmail().isLength({ max: 100 }),
   body("password").isLength({ min: 8, max: 100 }),
   checkErrors,
   async (req, res): Promise<Response<string> | void> => {
