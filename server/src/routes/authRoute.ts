@@ -30,15 +30,15 @@ router.post(
           res.cookie("refresh-token", createRefreshToken(user), {
             httpOnly: true,
           });
-          res.send("log in successfully");
+          res.json({ message: "log in successfully" });
         } else {
-          res.status(401).send("login or password incorrect");
+          res.status(401).json({ message: "login or password incorrect" });
         }
       } else {
-        res.status(401).send("login or password incorrect");
+        res.status(401).json({ message: "login or password incorrect" });
       }
     } else {
-      res.status(400).send("provide email and password");
+      res.status(400).json({ message: "provide email and password" });
     }
   }
 );
@@ -60,15 +60,15 @@ router.post(
 
       if (user) {
         if (user.tokenVersion === payload.tokenVersion) {
-          res.send({ accessToken: createAccessToken(user) });
+          res.json({ accessToken: createAccessToken(user) });
         } else {
-          res.status(406).send("sorry hacker");
+          res.status(406).json({ message: "sorry hacker" });
         }
       } else {
-        res.status(500).send("token is linked to any user");
+        res.status(500).json({ message: "token is linked to any user" });
       }
     } catch (e) {
-      res.status(403).send("refresh token expired");
+      res.status(403).json({ message: "refresh token expired" });
     }
   }
 );
@@ -76,7 +76,7 @@ router.post(
 router.get("/logout", (_req, res) => {
   res.clearCookie("access-token");
   res.clearCookie("refresh-token");
-  res.send("log out successfully");
+  res.json({ message: "log out successfully" });
 });
 
 router.post(
@@ -84,7 +84,7 @@ router.post(
   body("password").isLength({ min: 8, max: 100 }),
   checkErrors,
   (req, res) => {
-    res.send({
+    res.json({
       generatedPassword: hashSync(
         req.body.password,
         parseInt(process.env.SALT_ROUNDS!)
@@ -94,7 +94,7 @@ router.post(
 );
 
 router.get("/test", isAuth, (_req, res) => {
-  res.send("your token is valid");
+  res.json({ message: "your token is valid" });
 });
 
 export default router;
