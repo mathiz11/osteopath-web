@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Icon, Menu } from "semantic-ui-react";
 import { useStore } from "./Store";
+import logo from "../images/care.png";
+import "../styles/Navbar.css";
 
 const Navbar: React.FC = () => {
   const [state] = useStore();
@@ -10,37 +11,34 @@ const Navbar: React.FC = () => {
 
   return (
     <header>
-      <Menu pointing secondary>
-        <Menu.Item active={path === "/"}>
-          <Link to="/">
-            <Icon name="home" />
-            <span>Accueil</span>
+      <Link to="/">
+        <img src={logo} alt="site logo" width="64" height="64" />
+      </Link>
+      <div className="actions">
+        {state.isAuth ? (
+          <>
+            <Link
+              to="/profile"
+              className={path === "/profile" ? "active" : undefined}
+            >
+              Profil
+            </Link>
+            <Link
+              to="/logout"
+              className={path === "/logout" ? "active" : undefined}
+            >
+              Déconnexion
+            </Link>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className={path === "/login" ? "active" : undefined}
+          >
+            Connexion
           </Link>
-        </Menu.Item>
-        <Menu.Menu position="right">
-          {state.isAuth ? (
-            <>
-              <Menu.Item active={path === "/profile"}>
-                <Link to="/profile">
-                  <Icon name="user" />
-                  <span>Mon profil</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item color="red" name="logout">
-                <Icon name="sign-out" />
-                Se déconnecter
-              </Menu.Item>
-            </>
-          ) : (
-            <Menu.Item active={path === "/login"}>
-              <Link to="/login">
-                <Icon name="sign in" />
-                <span>Connexion</span>
-              </Link>
-            </Menu.Item>
-          )}
-        </Menu.Menu>
-      </Menu>
+        )}
+      </div>
     </header>
   );
 };
