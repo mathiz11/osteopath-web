@@ -1,0 +1,17 @@
+.login {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.login form {
+  margin-top: 2rem;
+}
+
+.login h1 {
+  text-align: center;
+}
+
+.login .center {
+  text-align: center;
+  padding-top: 1rem;
+}
