@@ -1,0 +1,20 @@
+.home {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.home .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.home .add-client {
+  display: flex;
+  align-items: center;
+}
+
+.home .add-client span {
+  margin-left: 0.5rem;
+}

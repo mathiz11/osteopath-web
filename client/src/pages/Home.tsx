@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Header, List } from "semantic-ui-react";
+import Clients from "../components/Clients";
 import Layout from "../components/Layout";
 import clientService from "../services/clientService";
+import { FaPlus } from "react-icons/fa";
+import { Client } from "../entities/Client";
+import "../styles/Home.css";
+// import { data } from "../entities/data";
 
 const Home: React.FC = () => {
-  const [clients, setClients] = useState<Array<any>>([]);
+  const [clients, setClients] = useState<Client[]>([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -19,25 +22,16 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      <div className="title-container">
-        <Header as="h1">Clients</Header>
-        <Link to="/client/new">
-          <Button icon="plus" circular></Button>
-        </Link>
+      <div className="home">
+        <div className="header">
+          <h1>Clients</h1>
+          <button className="primary add-client">
+            <FaPlus />
+            <span>Ajouter</span>
+          </button>
+        </div>
+        <Clients clients={clients} />
       </div>
-      <List selection divided relaxed>
-        {clients?.map((client, i) => (
-          <Link key={`client-${i}`} to="/client/[id]">
-            <List.Item>
-              <List.Content>
-                <List.Header>
-                  {client.firstname} {client.lastname}
-                </List.Header>
-              </List.Content>
-            </List.Item>
-          </Link>
-        ))}
-      </List>
     </Layout>
   );
 };
