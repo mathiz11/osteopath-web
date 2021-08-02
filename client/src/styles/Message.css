@@ -1,0 +1,19 @@
+.message {
+  border: 2px solid;
+  width: 100%;
+}
+
+.message.error {
+  background-color: #ffe8e6;
+  color: #db2828;
+}
+
+.message.success {
+  background-color: #e5f9e7;
+  color: #1ebc30;
+}
+
+.message.warning {
+  background-color: #fff8db;
+  color: #b58105;
+}
