@@ -1,0 +1,37 @@
+.form-control {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+}
+
+.form-control label {
+  font-size: 16px;
+}
+
+.form-control input {
+  margin: 0.5rem 0;
+  padding: 1rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+  transition: box-shadow 0.2s ease-out;
+}
+
+.form-control input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.form-error {
+  color: #db2828;
+  font-size: 12px;
+}
+
+.form-control.error input {
+  border-color: #db2828;
+}
+
+.form-control.error input:focus {
+  box-shadow: 0 0 0 1px #db2828;
+}
