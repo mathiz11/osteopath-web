@@ -1,13 +1,10 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
 import { createConnection } from "typeorm";
-require("dotenv").config();
 import authRouter from "./routes/authRoute";
 import clientRouter from "./routes/clientRoute";
-import cors from "cors";
-// import { User } from "./entities/User";
-// import { Client } from "./entities/Client";
-// import { getConnection } from "typeorm";
+require("dotenv").config();
 
 (async () => {
   const app = express();
@@ -49,4 +46,17 @@ import cors from "cors";
   //   client.user = mathis;
   // }
   // await getConnection().getRepository(Client).save(client);
+
+  // const hindy = new Animal();
+  // hindy.name = "Hindy";
+  // hindy.type = AnimalType.DOG;
+  // hindy.sex = "Femelle";
+  // hindy.breed = "Bichon maltais";
+  // const catherine = await getConnection()
+  //   .getRepository(Client)
+  //   .findOne({ where: { firstname: "Catherine" } });
+  // if (catherine) {
+  //   hindy.owner = catherine;
+  // }
+  // await getConnection().getRepository(Animal).save(hindy);
 })();
