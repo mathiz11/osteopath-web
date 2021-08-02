@@ -10,7 +10,10 @@ const router = express.Router();
 router.get("/", isAuth, async (req, res) => {
   const clients = await getConnection()
     .getRepository(Client)
-    .find({ userId: req.user.id });
+    .find({
+      where: { userId: req.user.id },
+      relations: ["animals"],
+    });
 
   res.json({ clients });
 });
@@ -20,7 +23,10 @@ router.get("/:id", isAuth, param("id").isInt(), async (req, res) => {
 
   const client = await getConnection()
     .getRepository(Client)
-    .findOne(clientId, { where: { userId: req.user.id } });
+    .findOne(clientId, {
+      where: { userId: req.user.id },
+      relations: ["animals"],
+    });
 
   if (client) {
     res.json({ client });
