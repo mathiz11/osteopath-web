@@ -9,9 +9,9 @@ import { translateMessage } from "../utils/responseMessage";
 import { MessageType } from "../utils/types";
 import Input from "../components/Input";
 import Message from "../components/Message";
-import "../styles/Login.css";
+import "../styles/LoginPage.css";
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
   let history = useHistory();
   const [message, setMessage] = React.useState<MessageType>({
     type: null,
@@ -94,4 +94,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
