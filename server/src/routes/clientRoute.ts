@@ -10,10 +10,7 @@ const router = express.Router();
 router.get("/", isAuth, async (req, res) => {
   const clients = await getConnection()
     .getRepository(Client)
-    .find({
-      where: { userId: req.user.id },
-      relations: ["animals"],
-    });
+    .find({ userId: req.user.id });
 
   res.json({ clients });
 });
