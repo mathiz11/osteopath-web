@@ -1,16 +1,19 @@
 import React from "react";
 import { Client } from "../entities/Client";
-import "../styles/Clients.css";
+import "../styles/ClientList.css";
 import { HiDotsVertical } from "react-icons/hi";
 import { FaPhoneAlt } from "react-icons/fa";
 import ActionsMenu, { ActionsMenuProps } from "./ActionsMenu";
+import { Link, useHistory } from "react-router-dom";
 
 type ClientsProps = {
   clients: Client[];
 };
 
-const Clients: React.FC<ClientsProps> = ({ clients }) => {
+const ClientList: React.FC<ClientsProps> = ({ clients }) => {
   const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuProps>({});
+
+  const history = useHistory();
 
   const closeActionsMenu = () => setActionsMenu({});
 
@@ -18,6 +21,7 @@ const Clients: React.FC<ClientsProps> = ({ clients }) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     clientId: number
   ) => {
+    e.stopPropagation();
     setActionsMenu({
       x:
         e.nativeEvent.x + 150 > window.innerWidth
@@ -33,15 +37,22 @@ const Clients: React.FC<ClientsProps> = ({ clients }) => {
 
   return (
     <div className="clients">
-      {clients.map((client, i) => (
-        <div className="client" key={`client${i}`}>
+      {clients.map((client) => (
+        <div
+          onClick={() => history.push(`/client/${client.id}`)}
+          className="clients-item"
+          key={`client${client.id}`}
+        >
           <span className="name">
             {client.firstname} {client.lastname}
           </span>
-          <button className="phone">
+          <button className="circle phone">
             <FaPhoneAlt size="14" />
           </button>
-          <button className="edit" onClick={(e) => handleClick(e, client.id)}>
+          <button
+            className="circle pure"
+            onClick={(e) => handleClick(e, client.id)}
+          >
             <HiDotsVertical size="20" />
           </button>
         </div>
@@ -53,4 +64,4 @@ const Clients: React.FC<ClientsProps> = ({ clients }) => {
   );
 };
 
-export default Clients;
+export default ClientList;
