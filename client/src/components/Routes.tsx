@@ -8,7 +8,6 @@ import { useStore } from "./Store";
 const Routes = () => {
   const [state] = useStore();
 
-  console.log(state.isAuth);
   return (
     <BrowserRouter>
       <Switch>
