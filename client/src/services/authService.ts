@@ -28,9 +28,23 @@ const getNewAccessToken = (): Promise<Response> => {
   });
 };
 
+const logout = (): Promise<Response> => {
+  return fetchManager({
+    url: process.env.REACT_APP_API_URL + "/auth/logout",
+    options: {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  });
+};
+
 const authService = {
   login,
   getNewAccessToken,
+  logout,
 };
 
 export default authService;
