@@ -10,21 +10,35 @@ body a {
   text-decoration: none;
 }
 
+body h1 {
+  font-size: 36px;
+}
+
+body h2 {
+  font-size: 30px;
+}
+
 .container {
   padding: 2rem 0.5rem;
 }
 
-.container h1 {
+.container h1,
+.container h2,
+.container h3,
+.container h4 {
   margin: 0;
 }
+
+/* BUTTON OR LINK */
 
 body button,
 body a {
   transition: all 0.2s ease-out;
+  border: unset;
 }
 
-body button.primary,
-body a.primary {
+button.primary,
+a.primary {
   color: #fff;
   outline: none;
   font-family: "Raleway", sans-serif;
@@ -38,13 +52,13 @@ body a.primary {
   cursor: pointer;
 }
 
-body button.primary:hover,
-body a.primary:hover {
+button.primary:hover,
+a.primary:hover {
   opacity: 0.8;
 }
 
-body button.secondary,
-body a.secondary {
+button.secondary,
+a.secondary {
   color: #7bbf99;
   background-color: #fff;
   border: 2px solid #7bbf99;
@@ -52,4 +66,61 @@ body a.secondary {
   padding: 1rem 2rem;
   border-radius: 10px;
   margin: 0 0.5rem;
+}
+
+button.circle {
+  height: 2.6rem;
+  width: 2.6rem;
+  margin: 0 0.2rem;
+  border-radius: 2.6rem;
+  cursor: pointer;
+}
+
+button.circle svg {
+  padding-top: 0.2rem;
+}
+
+button.circle.phone {
+  margin-left: 1.2rem;
+  background-color: #7bbf99;
+  color: #fff;
+}
+
+button.circle.phone:hover {
+  opacity: 0.8;
+}
+
+button.circle.pure {
+  background-color: #fff;
+  margin-left: auto;
+}
+
+button.circle.pure:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* HEADER */
+
+.header.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 1rem 0 1.5rem;
+}
+
+.header.add-button button {
+  display: flex;
+  align-items: center;
+}
+
+.header.add-button button span {
+  margin-left: 0.5rem;
+}
+
+/* FORM */
+
+form .center {
+  text-align: center;
+  padding-top: 1rem;
 }
