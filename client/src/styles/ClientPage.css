@@ -1,0 +1,9 @@
+.client {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.container .client h2 {
+  margin-left: 1.5rem;
+  margin-bottom: 2rem;
+}
