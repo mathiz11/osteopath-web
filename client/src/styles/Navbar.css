@@ -14,7 +14,8 @@ header .actions {
   margin-left: auto;
 }
 
-header .actions a {
+header .actions a,
+header .actions button {
   font-weight: 500;
   transition: ease-out 0.4s;
   padding: 1rem 2rem;
@@ -22,15 +23,25 @@ header .actions a {
   margin: 0 0.4rem;
 }
 
-header .actions a:hover {
+header .actions button {
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Raleway", sans-serif;
+}
+
+header .actions a:hover,
+header .actions button:hover {
   color: #fff;
   background-color: #7bbf99;
 }
 
-header .actions a.active {
+header .actions a.active,
+header .actions button:hove {
   color: #7bbf99;
 }
 
-header .actions a.active:hover {
+header .actions a.active:hover,
+header .actions button:hove {
   color: #fff;
 }

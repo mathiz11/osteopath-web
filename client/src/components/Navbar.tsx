@@ -1,13 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useStore } from "./Store";
+import { ACTION, useStore } from "./Store";
 import logo from "../images/care.png";
 import "../styles/Navbar.css";
+import authService from "../services/authService";
 
 const Navbar: React.FC = () => {
-  const [state] = useStore();
+  const [state, dispatch] = useStore();
 
-  const path = window.location.pathname;
+  const path = React.useMemo(
+    () => window.location.pathname,
+    [window.location.pathname]
+  );
+
+  const logout = async () => {
+    const response = await authService.logout();
+    if (response.ok) {
+      dispatch({ type: ACTION.LOG_OUT });
+    }
+  };
 
   return (
     <header>
@@ -23,12 +34,12 @@ const Navbar: React.FC = () => {
             >
               Profil
             </Link>
-            <Link
-              to="/logout"
+            <button
+              onClick={logout}
               className={path === "/logout" ? "active" : undefined}
             >
               Déconnexion
-            </Link>
+            </button>
           </>
         ) : (
           <Link
