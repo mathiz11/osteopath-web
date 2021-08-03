@@ -1,17 +1,25 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
+import ClientPage from "../pages/ClientPage";
+import HomePage from "../pages/HomePage";
+import LoginPage from "../pages/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import { useStore } from "./Store";
 
 const Routes = () => {
   const [state] = useStore();
 
+  console.log(state.isAuth);
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/" exact component={Home} isAuth={state.isAuth} />
-        <Route path="/login" component={Login} />
+        <PrivateRoute
+          path="/"
+          exact
+          component={HomePage}
+          isAuth={state.isAuth}
+        />
+        <Route path="/login" component={LoginPage} />
+        <PrivateRoute path="/client/:clientId" component={ClientPage} />
       </Switch>
     </BrowserRouter>
   );
