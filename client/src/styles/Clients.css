@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  border-radius: 10px;
+}
+
+.client:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .client:first-of-type {
@@ -36,6 +41,10 @@
   border-radius: 2.6rem;
   cursor: pointer;
   transition: opacity 0.2s ease-out;
+}
+
+.client button svg {
+  padding-top: 0.2rem;
 }
 
 .client button:hover {
