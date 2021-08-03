@@ -127,8 +127,8 @@ router.post(
   }
 );
 
-router.get("/test", isAuth, (_req, res) => {
-  res.json({ message: "your token is valid" });
+router.get("/is-auth", isAuth, (_req, res) => {
+  res.json({ message: "authenticated" });
 });
 
 export default router;
