@@ -1,6 +1,6 @@
 .animals {
   display: grid;
-  grid-template-columns: 400px 400px;
+  grid-template-columns: 380px 380px;
   justify-content: center;
   column-gap: 1rem;
   row-gap: 1rem;
@@ -9,7 +9,7 @@
 
 @media (max-width: 900px) {
   .animals {
-    grid-template-columns: 400px;
+    grid-template-columns: 380px;
   }
 }
 
