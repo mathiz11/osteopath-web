@@ -1,53 +1,53 @@
 import { Animal, AnimalSubtype, AnimalType } from "../entities/Animal";
+import bird from "../images/animals/bird.png";
+import cat from "../images/animals/cat.png";
+import cow from "../images/animals/cow.png";
+import dog from "../images/animals/dog.png";
+import donkey from "../images/animals/donkey.png";
+import ewe from "../images/animals/ewe.png";
+import ferret from "../images/animals/ferret.png";
+import goat from "../images/animals/goat.png";
+import guineaPig from "../images/animals/guinea-pig.png";
+import horse from "../images/animals/horse.png";
+import rabbit from "../images/animals/rabbit.png";
+import snake from "../images/animals/snake.png";
 
 const getAnimalSubtypeImageSrc = (animalSubtype: AnimalSubtype) => {
   switch (animalSubtype) {
     case AnimalSubtype.RABBIT:
-      return "../images/animals/rabbit.png";
+      return rabbit;
     case AnimalSubtype.GUINEA_PIG:
-      return "../images/animals/guinea-pig.png";
+      return guineaPig;
     case AnimalSubtype.FERRET:
-      return "../images/animals/ferret.png";
+      return ferret;
     case AnimalSubtype.SNAKE:
-      return "../images/animals/snake.png";
+      return snake;
     case AnimalSubtype.BIRD:
-      return "../images/animals/bird.png";
+      return bird;
     default:
-      return "";
+      return undefined;
   }
 };
 
-export const getAnimalImageSrc = (animal: Animal): string => {
-  let src = null;
-
-  switch (animal?.type) {
+export const getAnimalImageSrc = (animal: Animal): string | undefined => {
+  switch (animal.type as AnimalType) {
     case AnimalType.HORSE:
-      src = "../images/animals/horse.png";
-      break;
+      return horse;
     case AnimalType.COW:
-      src = "../images/animals/cow.png";
-      break;
+      return cow;
     case AnimalType.DOG:
-      src = "../images/animals/dog.png";
-      break;
+      return dog;
     case AnimalType.CAT:
-      src = "../images/animals/cat.png";
-      break;
+      return cat;
     case AnimalType.GOAT:
-      src = "../images/animals/goat.png";
-      break;
+      return goat;
     case AnimalType.EWE:
-      src = "../images/animals/ewe.png";
-      break;
+      return ewe;
     case AnimalType.DONKEY:
-      src = "../images/animals/donkey.png";
-      break;
+      return donkey;
     case AnimalType.NAC:
-      src = getAnimalSubtypeImageSrc(animal.subtype);
-      break;
+      return getAnimalSubtypeImageSrc(animal.subtype as AnimalSubtype);
     default:
-      src = "";
+      return undefined;
   }
-
-  return src;
 };
