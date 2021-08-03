@@ -56,7 +56,7 @@ const AnimalList = ({ animals }: AnimalProps) => {
               className="circle pure"
               onClick={(e) => handleClick(e, animal.id)}
             >
-              <HiDotsVertical size="20" />
+              <HiDotsVertical size="18" />
             </button>
           </div>
           <div>
