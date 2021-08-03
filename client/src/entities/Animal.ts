@@ -18,12 +18,12 @@ export enum AnimalSubtype {
 }
 
 export type Animal = {
-  id: string;
+  id: number;
   name: string;
-  type: AnimalType;
-  subtype: AnimalSubtype;
+  type: string;
+  subtype: string | null;
   sex: string;
   breed: string;
-  ownerId: string;
+  ownerId: number;
   // cards: Card[];
 };
