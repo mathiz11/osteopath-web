@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
+  padding: 0 1rem 0 1.5rem;
 }
 
 .home .add-client {
