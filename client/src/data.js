@@ -1,4 +1,4 @@
-export const data = {
+export const clients = {
   clients: [
     {
       id: 1,
@@ -81,4 +81,45 @@ export const data = {
       ],
     },
   ],
+};
+
+export const client = {
+  client: {
+    id: 1,
+    firstname: "Catherine",
+    lastname: "Enjolras",
+    email: "catherine@gmail.com",
+    phone: "0606060606",
+    address: "44 rue du faubourg du Nord\n34130 MAUGUIO",
+    userId: 1,
+    animals: [
+      {
+        id: 1,
+        name: "Hindy",
+        type: "Chien",
+        subtype: null,
+        sex: "Femelle",
+        breed: "Bichon maltais",
+        ownerId: 1,
+      },
+      {
+        id: 2,
+        name: "Neylie",
+        type: "NAC",
+        subtype: "Serpent",
+        sex: "Femelle",
+        breed: "Bichon maltais",
+        ownerId: 1,
+      },
+      {
+        id: 3,
+        name: "Nyx'o",
+        type: "Cheval",
+        subtype: null,
+        sex: "Poulain",
+        breed: "Portugais",
+        ownerId: 1,
+      },
+    ],
+  },
 };
