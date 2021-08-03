@@ -1,0 +1,48 @@
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 80%;
+  border-radius: 10px;
+}
+
+.modal .header {
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+.modal .header span {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.modal .header button {
+  border: unset;
+  background-color: #fff;
+  height: 2.6rem;
+  width: 2.6rem;
+  border-radius: 2.6rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out;
+}
+
+.modal .header button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal .header button svg {
+  padding-top: 0.2rem;
+}
