@@ -53,7 +53,7 @@ const ClientList: React.FC<ClientsProps> = ({ clients }) => {
             className="circle pure"
             onClick={(e) => handleClick(e, client.id)}
           >
-            <HiDotsVertical size="20" />
+            <HiDotsVertical size="18" />
           </button>
         </div>
       ))}
