@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "../styles/ActionsMenu.css";
 
 export type ActionsMenuProps = {
@@ -46,7 +45,7 @@ const ActionsMenu = ({ x, y, clientId, handleClose }: ActionsMenuProps) => {
 
   return (
     <div ref={ref} style={style} className="actions-menu">
-      <Link to="/client/edit">Modifier</Link>
+      <button>Modifier</button>
       <button>Supprimer</button>
     </div>
   );
