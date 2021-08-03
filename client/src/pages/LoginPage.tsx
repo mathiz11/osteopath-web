@@ -50,45 +50,47 @@ const LoginPage: React.FC = () => {
   return (
     <Layout>
       <div className="login">
-        <h1>Connexion</h1>
-        <Formik
-          initialValues={initialValues}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validationSchema={LoginSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
-            <form onSubmit={handleSubmit}>
-              {message.type && (
-                <Message type={message.type}>{message.text}</Message>
-              )}
-              <Input
-                id="email"
-                label="Email"
-                type="email"
-                placeholder="Email"
-                onChange={handleChange}
-                value={values.email}
-                error={errors.email}
-              />
-              <Input
-                id="password"
-                label="Mot de passe"
-                type="password"
-                placeholder="Mot de passe"
-                onChange={handleChange}
-                value={values.password}
-                error={errors.password}
-              />
-              <div className="center">
-                <button type="submit" className="primary">
-                  Se connecter
-                </button>
-              </div>
-            </form>
-          )}
-        </Formik>
+        <div className="container">
+          <h1>Connexion</h1>
+          <Formik
+            initialValues={initialValues}
+            validateOnBlur={false}
+            validateOnChange={false}
+            validationSchema={LoginSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
+              <form onSubmit={handleSubmit}>
+                {message.type && (
+                  <Message type={message.type}>{message.text}</Message>
+                )}
+                <Input
+                  id="email"
+                  label="Email"
+                  type="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                  value={values.email}
+                  error={errors.email}
+                />
+                <Input
+                  id="password"
+                  label="Mot de passe"
+                  type="password"
+                  placeholder="Mot de passe"
+                  onChange={handleChange}
+                  value={values.password}
+                  error={errors.password}
+                />
+                <div className="center">
+                  <button type="submit" className="primary">
+                    Se connecter
+                  </button>
+                </div>
+              </form>
+            )}
+          </Formik>
+        </div>
       </div>
     </Layout>
   );
