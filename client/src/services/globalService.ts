@@ -33,6 +33,8 @@ export const fetchManager = async (
     } else if (responseNewAccessToken.ok) {
       response = await fetchData(fetchParams);
     }
+  } else if (response.status === 404) {
+    window.location.pathname = "/login";
   }
 
   return response;

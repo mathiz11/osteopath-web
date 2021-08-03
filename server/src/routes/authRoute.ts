@@ -100,10 +100,10 @@ router.get("/refresh-token", async (req, res) => {
         res.status(500).json({ message: "token is linked to any user" });
       }
     } catch (e) {
-      res.status(401);
+      res.status(401).json({ message: "refresh token not valid" });
     }
   } else {
-    res.status(401);
+    res.status(404);
   }
 });
 

@@ -30,11 +30,11 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
       req.user = payload as any;
       next();
     } catch (err) {
-      res.status(401);
-      next("not auth");
+      res.status(401).json({ message: "access token not valid" });
+      next("access token not valid");
     }
   } else {
-    res.status(401);
-    next("not auth");
+    res.status(404);
+    next("access token not found");
   }
 };
