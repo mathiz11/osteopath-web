@@ -18,7 +18,11 @@ const Routes = () => {
           isAuth={state.isAuth}
         />
         <Route path="/login" component={LoginPage} />
-        <PrivateRoute path="/client/:clientId" component={ClientPage} />
+        <PrivateRoute
+          path="/client/:clientId"
+          component={ClientPage}
+          isAuth={state.isAuth}
+        />
       </Switch>
     </BrowserRouter>
   );
