@@ -1,3 +1,4 @@
+import { ClientValues } from "../schemas/clientSchema";
 import { fetchManager } from "./globalService";
 
 const getAll = async (): Promise<Response> => {
@@ -26,6 +27,20 @@ const getOne = async (id: number): Promise<Response> => {
   });
 };
 
-const clientService = { getAll, getOne };
+const create = async (client: ClientValues): Promise<Response> => {
+  return fetchManager({
+    url: process.env.REACT_APP_API_URL + "/clients",
+    options: {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    body: JSON.stringify(client),
+  });
+};
+
+const clientService = { getAll, getOne, create };
 
 export default clientService;
