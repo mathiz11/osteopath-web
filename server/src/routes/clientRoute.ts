@@ -56,7 +56,7 @@ router.post(
 
       res.status(201).json({ message: "client created" });
     } catch (e) {
-      res.status(500).json({ message: "client creation error", detail: e });
+      res.status(500).json({ message: "client creation error" });
     }
   }
 );
@@ -91,9 +91,9 @@ router.put(
         })
         .execute();
 
-      res.status(200).json({ message: "client updated" });
+      res.json({ message: "client updated" });
     } catch (e) {
-      res.status(500).json({ message: "client update error", detail: e });
+      res.status(500).json({ message: "client update error" });
     }
   }
 );
@@ -106,24 +106,19 @@ router.delete(
   async (req, res) => {
     const clientId = req.params.id;
 
-    if (
-      !(await getConnection()
-        .getRepository(Client)
-        .findOne(clientId, { where: { userId: req.user.id } }))
-    ) {
-      res.status(404).json({ message: "client not found" });
-    } else {
-      try {
-        await getConnection()
+    try {
+      if (
+        !(await getConnection()
           .getRepository(Client)
-          .delete({ id: clientId, userId: req.user.id });
-        res.status(200).json({ message: "client deleted" });
-      } catch (e) {
-        res.status(500).json({
-          message: "client deletion error",
-          detail: e,
-        });
+          .findOne(clientId, { where: { userId: req.user.id } }))
+      ) {
+        res.status(404).json({ message: "client not found" });
+      } else {
+        await getConnection().getRepository(Client).delete({ id: clientId });
+        res.json({ message: "client deleted" });
       }
+    } catch (e) {
+      res.status(500).json({ message: "client deletion error" });
     }
   }
 );
