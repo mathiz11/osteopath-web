@@ -4,7 +4,10 @@ import { Animal } from "../entities/Animal";
 import "../styles/AnimalList.css";
 import { HiDotsVertical } from "react-icons/hi";
 import { client } from "../data";
-import ActionsMenu, { ActionsMenuProps } from "./ActionsMenu";
+import ActionsMenu, {
+  ActionsMenuValues,
+  DEFAULT_ACTIONS_MENU_VALUES,
+} from "./ActionsMenu";
 import { getAnimalImageSrc } from "../utils/animals";
 
 type AnimalProps = {
@@ -12,13 +15,15 @@ type AnimalProps = {
 };
 
 const AnimalList = ({ animals }: AnimalProps) => {
-  const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuProps>({});
+  const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
+    DEFAULT_ACTIONS_MENU_VALUES
+  );
 
   let animalss = client.client.animals;
 
   const history = useHistory();
 
-  const closeActionsMenu = () => setActionsMenu({});
+  const closeActionsMenu = () => setActionsMenu(DEFAULT_ACTIONS_MENU_VALUES);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -36,6 +41,12 @@ const AnimalList = ({ animals }: AnimalProps) => {
           : e.nativeEvent.pageY,
       clientId,
     });
+  };
+
+  const editAnimal = (animalId: number | undefined) => {
+    if (animalId) {
+      console.log(animalId);
+    }
   };
 
   return (
@@ -65,7 +76,11 @@ const AnimalList = ({ animals }: AnimalProps) => {
         </div>
       ))}
       {actionsMenu.clientId && (
-        <ActionsMenu handleClose={closeActionsMenu} {...actionsMenu} />
+        <ActionsMenu
+          close={closeActionsMenu}
+          editEvent={editAnimal}
+          values={actionsMenu}
+        />
       )}
     </div>
   );
