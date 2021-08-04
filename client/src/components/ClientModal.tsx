@@ -1,10 +1,5 @@
 import { Formik } from "formik";
-import { useState } from "react";
-import {
-  ClientSchema,
-  ClientValues,
-  DEFAULT_CLIENT_VALUES,
-} from "../schemas/clientSchema";
+import { ClientSchema, ClientValues } from "../schemas/clientSchema";
 import clientService from "../services/clientService";
 import { translateMessage } from "../utils/responseMessage";
 import Input from "./Input";
