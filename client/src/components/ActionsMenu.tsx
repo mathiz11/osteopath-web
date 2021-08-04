@@ -17,6 +17,7 @@ type ActionsMenuProps = {
   values: ActionsMenuValues;
   close: () => void;
   editEvent: (id: number | undefined) => void;
+  deleteEvent: (id: number | undefined) => void;
 };
 
 export const useOutsideAlerter = (
@@ -41,7 +42,12 @@ export const useOutsideAlerter = (
   }, [ref, closeModal]);
 };
 
-const ActionsMenu = ({ values, editEvent, close }: ActionsMenuProps) => {
+const ActionsMenu = ({
+  values,
+  editEvent,
+  deleteEvent,
+  close,
+}: ActionsMenuProps) => {
   const { x, y, clientId } = values;
   const ref = React.useRef<HTMLDivElement>(null);
   useOutsideAlerter(ref, close);
@@ -57,7 +63,7 @@ const ActionsMenu = ({ values, editEvent, close }: ActionsMenuProps) => {
   return (
     <div ref={ref} style={style} className="actions-menu">
       <button onClick={() => editEvent(clientId)}>Modifier</button>
-      <button>Supprimer</button>
+      <button onClick={() => deleteEvent(clientId)}>Supprimer</button>
     </div>
   );
 };
