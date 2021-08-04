@@ -6,7 +6,7 @@ type AlertProps = {
   text: ReactElement;
   type: "delete";
   buttonName: string;
-  close: () => void;
+  closeEvent: () => void;
   confirmEvent: () => void;
 };
 
@@ -15,16 +15,16 @@ const Alert = ({
   text,
   type,
   buttonName,
-  close,
+  closeEvent,
   confirmEvent,
 }: AlertProps) => {
   return (
-    <div className="alert-container" onClick={close}>
+    <div className="alert-container">
       <div className="alert">
         <div className="header">{title}</div>
         <div className="content">{text}</div>
         <div className="footer">
-          <button className="secondary" onClick={close}>
+          <button className="secondary" onClick={closeEvent}>
             Annuler
           </button>
           <button className={`primary ${type}`} onClick={confirmEvent}>
