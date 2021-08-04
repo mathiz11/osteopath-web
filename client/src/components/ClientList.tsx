@@ -4,18 +4,24 @@ import { HiDotsVertical } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
 import { Client } from "../entities/Client";
 import "../styles/ClientList.css";
-import ActionsMenu, { ActionsMenuProps } from "./ActionsMenu";
+import ActionsMenu, {
+  ActionsMenuValues,
+  DEFAULT_ACTIONS_MENU_VALUES,
+} from "./ActionsMenu";
 
 type ClientsProps = {
   clients: Client[];
+  editEvent: (clientId: number) => void;
 };
 
-const ClientList: React.FC<ClientsProps> = ({ clients }) => {
-  const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuProps>({});
+const ClientList: React.FC<ClientsProps> = ({ clients, editEvent }) => {
+  const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
+    DEFAULT_ACTIONS_MENU_VALUES
+  );
 
   const history = useHistory();
 
-  const closeActionsMenu = () => setActionsMenu({});
+  const closeActionsMenu = () => setActionsMenu(DEFAULT_ACTIONS_MENU_VALUES);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -33,6 +39,13 @@ const ClientList: React.FC<ClientsProps> = ({ clients }) => {
           : e.nativeEvent.pageY,
       clientId,
     });
+  };
+
+  const editClient = (clientId: number | undefined) => {
+    if (clientId) {
+      // send event to parent
+      editEvent(clientId);
+    }
   };
 
   return (
@@ -58,7 +71,11 @@ const ClientList: React.FC<ClientsProps> = ({ clients }) => {
         </div>
       ))}
       {actionsMenu.clientId && (
-        <ActionsMenu handleClose={closeActionsMenu} {...actionsMenu} />
+        <ActionsMenu
+          close={closeActionsMenu}
+          editEvent={editClient}
+          values={actionsMenu}
+        />
       )}
     </div>
   );
