@@ -34,6 +34,6 @@ export class Client {
   @ManyToOne(() => User, (user) => user.clients)
   user: User;
 
-  @OneToMany(() => Animal, (animal) => animal.owner)
+  @OneToMany(() => Animal, (animal) => animal.client)
   animals: Animal[];
 }
