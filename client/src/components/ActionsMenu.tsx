@@ -1,11 +1,22 @@
 import React from "react";
 import "../styles/ActionsMenu.css";
 
-export type ActionsMenuProps = {
-  x?: number;
-  y?: number;
-  clientId?: number;
-  handleClose?: () => void;
+export type ActionsMenuValues = {
+  x: number | undefined;
+  y: number | undefined;
+  clientId: number | undefined;
+};
+
+export const DEFAULT_ACTIONS_MENU_VALUES: ActionsMenuValues = {
+  x: undefined,
+  y: undefined,
+  clientId: undefined,
+};
+
+type ActionsMenuProps = {
+  values: ActionsMenuValues;
+  close: () => void;
+  editEvent: (id: number | undefined) => void;
 };
 
 export const useOutsideAlerter = (
@@ -30,10 +41,10 @@ export const useOutsideAlerter = (
   }, [ref, closeModal]);
 };
 
-const ActionsMenu = ({ x, y, clientId, handleClose }: ActionsMenuProps) => {
+const ActionsMenu = ({ values, editEvent, close }: ActionsMenuProps) => {
+  const { x, y, clientId } = values;
   const ref = React.useRef<HTMLDivElement>(null);
-
-  useOutsideAlerter(ref, handleClose);
+  useOutsideAlerter(ref, close);
 
   let style: React.CSSProperties = React.useMemo(
     () => ({
@@ -45,7 +56,7 @@ const ActionsMenu = ({ x, y, clientId, handleClose }: ActionsMenuProps) => {
 
   return (
     <div ref={ref} style={style} className="actions-menu">
-      <button>Modifier</button>
+      <button onClick={() => editEvent(clientId)}>Modifier</button>
       <button>Supprimer</button>
     </div>
   );
