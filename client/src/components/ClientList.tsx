@@ -68,14 +68,13 @@ const ClientList: React.FC<ClientsProps> = ({
           </button>
         </div>
       ))}
-      {actionsMenu.clientId && (
-        <ActionsMenu
-          close={closeActionsMenu}
-          editEvent={editEvent}
-          deleteEvent={deleteEvent}
-          values={actionsMenu}
-        />
-      )}
+      <ActionsMenu
+        isVisible={actionsMenu.clientId !== undefined}
+        close={closeActionsMenu}
+        editEvent={editEvent}
+        deleteEvent={deleteEvent}
+        values={actionsMenu}
+      />
     </div>
   );
 };
