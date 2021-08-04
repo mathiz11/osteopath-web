@@ -1,4 +1,4 @@
-.modal {
+.modal-container {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.modal-content {
+.modal {
   background-color: #fff;
   margin: auto;
   padding: 1.2rem;
