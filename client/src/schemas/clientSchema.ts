@@ -1,11 +1,20 @@
 import * as Yup from "yup";
 
 export type ClientValues = {
-  firstname?: string;
-  lastname?: string;
-  phone?: string;
-  email?: string;
-  address?: string;
+  id?: number;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  email: string;
+  address: string;
+};
+
+export const DEFAULT_CLIENT_VALUES: ClientValues = {
+  firstname: "",
+  lastname: "",
+  phone: "",
+  email: "",
+  address: "",
 };
 
 export const ClientSchema = Yup.object().shape({
