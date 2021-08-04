@@ -55,10 +55,10 @@ export class Animal {
   breed: string;
 
   @Column()
-  ownerId: string;
+  clientId: string;
 
   @ManyToOne(() => Client, (client) => client.animals)
-  owner: Client;
+  client: Client;
 
   @OneToMany(() => Card, (card) => card.animal)
   cards: Card[];
