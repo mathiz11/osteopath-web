@@ -11,6 +11,7 @@ import { Formik } from "formik";
 import Message from "../components/Message";
 import Input from "../components/Input";
 import ClientList from "../components/ClientList";
+import { useMemo } from "react";
 // import { data } from "../entities/data";
 
 type ModalProps<T> = {
@@ -25,25 +26,29 @@ const HomePage: React.FC = () => {
     type: null,
     text: null,
   });
-  const handleClose = () => setModal({ show: false });
+
+  const closeModal = () => setModal({ show: false });
+
+  const getAllClients = async () => {
+    const response = await clientService.getAll();
+    const { clients } = await response.json();
+    setClients(clients);
+  };
+
+  const initialValues: ClientValues = useMemo(
+    () => ({
+      firstname: "",
+      lastname: "",
+      phone: "",
+      email: "",
+      address: "",
+    }),
+    []
+  );
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await clientService.getAll();
-      const { clients } = await response.json();
-      setClients(clients);
-    };
-
-    fetchData();
+    getAllClients();
   }, []);
-
-  const initialValues: ClientValues = {
-    firstname: "",
-    lastname: "",
-    phone: "",
-    email: "",
-    address: "",
-  };
 
   React.useEffect(() => {
     if (message) {
@@ -77,7 +82,7 @@ const HomePage: React.FC = () => {
           <ClientList clients={clients} />
           {modal.show && (
             <Modal
-              close={handleClose}
+              close={closeModal}
               title="Ajouter un client"
               entity={modal.entity}
               form={
@@ -87,22 +92,12 @@ const HomePage: React.FC = () => {
                   validateOnBlur={false}
                   validationSchema={ClientSchema}
                   onSubmit={async (values, { setErrors }) => {
-                    // const response = await createClient(values);
-                    // if (response.data?.createClient.errors) {
-                    //   setErrors(toErrorMap(response.data.createClient.errors));
-                    // }
-                    // if (response.data?.createClient.error) {
-                    //   setMessage({
-                    //     color: "red",
-                    //     text: getErrorMessage(response.data.createClient.error),
-                    //   });
-                    // }
-                    // if (response.data?.createClient.message) {
-                    //   setMessage({
-                    //     color: "green",
-                    //     text: getSuccessMessage(response.data.createClient.message),
-                    //   });
-                    // }
+                    const response = await clientService.create(values);
+
+                    if (response.ok) {
+                      getAllClients();
+                      closeModal();
+                    }
                   }}
                 >
                   {({ values, handleChange, handleSubmit, errors }) => (
