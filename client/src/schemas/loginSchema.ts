@@ -5,6 +5,11 @@ export type LoginValues = {
   password: string;
 };
 
+export const DEFAULT_LOGIN_VALUES: LoginValues = {
+  email: "",
+  password: "",
+};
+
 export const LoginSchema = Yup.object().shape({
   email: Yup.string()
     .email("L'email n'est pas au bon format")

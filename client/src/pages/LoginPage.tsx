@@ -3,7 +3,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Layout from "../components/Layout";
 import { ActionType, useStore } from "../components/Store";
-import { LoginSchema, LoginValues } from "../schemas/loginSchema";
+import {
+  DEFAULT_LOGIN_VALUES,
+  LoginSchema,
+  LoginValues,
+} from "../schemas/loginSchema";
 import authService from "../services/authService";
 import { translateMessage } from "../utils/responseMessage";
 import Input from "../components/Input";
@@ -14,10 +18,7 @@ const LoginPage: React.FC = () => {
   let history = useHistory();
   const [, dispatch] = useStore();
 
-  const initialValues: LoginValues = {
-    email: "",
-    password: "",
-  };
+  const initialValues: LoginValues = DEFAULT_LOGIN_VALUES;
 
   const handleSubmit = async (values: LoginValues) => {
     const response = await authService.login(values);
