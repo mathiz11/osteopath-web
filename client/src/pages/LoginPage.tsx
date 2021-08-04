@@ -2,21 +2,16 @@ import { Formik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Layout from "../components/Layout";
-import { ACTION, useStore } from "../components/Store";
+import { ActionType, useStore } from "../components/Store";
 import { LoginSchema, LoginValues } from "../schemas/loginSchema";
 import authService from "../services/authService";
 import { translateMessage } from "../utils/responseMessage";
-import { MessageType } from "../utils/types";
 import Input from "../components/Input";
-import Message from "../components/Message";
+import Message, { MessageType } from "../components/Message";
 import "../styles/LoginPage.css";
 
 const LoginPage: React.FC = () => {
   let history = useHistory();
-  const [message, setMessage] = React.useState<MessageType>({
-    type: null,
-    text: null,
-  });
   const [, dispatch] = useStore();
 
   const initialValues: LoginValues = {
@@ -24,25 +19,20 @@ const LoginPage: React.FC = () => {
     password: "",
   };
 
-  React.useEffect(() => {
-    if (message) {
-      setTimeout(() => {
-        setMessage({ type: null, text: null });
-      }, 5000);
-    }
-  }, [message]);
-
   const handleSubmit = async (values: LoginValues) => {
     const response = await authService.login(values);
 
     if (response.ok) {
-      dispatch({ type: ACTION.LOG_IN });
+      dispatch({ type: ActionType.LOG_IN });
       history.push("/");
     } else {
       const jsonResponse = await response.json();
-      setMessage({
-        type: "error",
-        text: translateMessage(jsonResponse.message, response.ok),
+      dispatch({
+        type: ActionType.SET_MESSAGE,
+        payload: {
+          type: MessageType.ERROR,
+          text: translateMessage(jsonResponse.message, response.ok),
+        },
       });
     }
   };
@@ -61,9 +51,7 @@ const LoginPage: React.FC = () => {
           >
             {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
               <form onSubmit={handleSubmit}>
-                {message.type && (
-                  <Message type={message.type}>{message.text}</Message>
-                )}
+                <Message />
                 <Input
                   id="email"
                   label="Email"

@@ -4,8 +4,9 @@ import { FaPlus } from "react-icons/fa";
 import ClientList from "../components/ClientList";
 import Input from "../components/Input";
 import Layout from "../components/Layout";
-import Message from "../components/Message";
+import Message, { MessageType } from "../components/Message";
 import Modal from "../components/Modal";
+import { ActionType, useStore } from "../components/Store";
 import { Client } from "../entities/Client";
 import {
   ClientSchema,
@@ -14,33 +15,19 @@ import {
 } from "../schemas/clientSchema";
 import clientService from "../services/clientService";
 import "../styles/HomePage.css";
-import { MessageType } from "../utils/types";
+import { translateMessage } from "../utils/responseMessage";
 
 const HomePage: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [message, setMessage] = React.useState<MessageType>({
-    type: null,
-    text: null,
-  });
   const [formInitialValues, setFormInitialValues] = useState<ClientValues>(
     DEFAULT_CLIENT_VALUES
   );
+  const [, dispatch] = useStore();
 
   React.useEffect(() => {
     getAllClients();
   }, []);
-
-  React.useEffect(() => {
-    if (message) {
-      setTimeout(() => {
-        setMessage({
-          type: null,
-          text: null,
-        });
-      }, 5000);
-    }
-  }, [message]);
 
   const closeModal = () => setShowModal(false);
 
@@ -90,14 +77,24 @@ const HomePage: React.FC = () => {
                   if (response.ok) {
                     getAllClients();
                     closeModal();
+                  } else {
+                    const jsonResponse = await response.json();
+                    dispatch({
+                      type: ActionType.SET_MESSAGE,
+                      payload: {
+                        type: MessageType.ERROR,
+                        text: translateMessage(
+                          jsonResponse.message,
+                          response.ok
+                        ),
+                      },
+                    });
                   }
                 }}
               >
                 {({ values, handleChange, handleSubmit, errors }) => (
                   <form onSubmit={handleSubmit}>
-                    {message.type && (
-                      <Message type={message.type}>{message.text}</Message>
-                    )}
+                    <Message />
                     <Input
                       id="firstname"
                       label="Prénom"
