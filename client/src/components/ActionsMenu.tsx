@@ -14,6 +14,7 @@ export const DEFAULT_ACTIONS_MENU_VALUES: ActionsMenuValues = {
 };
 
 type ActionsMenuProps = {
+  isVisible: boolean;
   values: ActionsMenuValues;
   close: () => void;
   editEvent: (id: number | undefined) => void;
@@ -43,6 +44,7 @@ export const useOutsideAlerter = (
 };
 
 const ActionsMenu = ({
+  isVisible,
   values,
   editEvent,
   deleteEvent,
@@ -60,12 +62,12 @@ const ActionsMenu = ({
     [x, y]
   );
 
-  return (
+  return isVisible ? (
     <div ref={ref} style={style} className="actions-menu">
       <button onClick={() => editEvent(clientId)}>Modifier</button>
       <button onClick={() => deleteEvent(clientId)}>Supprimer</button>
     </div>
-  );
+  ) : null;
 };
 
 export default ActionsMenu;
