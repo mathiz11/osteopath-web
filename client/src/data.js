@@ -100,7 +100,7 @@ export const client = {
         subtype: null,
         sex: "Femelle",
         breed: "Bichon maltais",
-        ownerId: 1,
+        clientId: 1,
       },
       {
         id: 2,
@@ -109,7 +109,7 @@ export const client = {
         subtype: "Serpent",
         sex: "Femelle",
         breed: "Bichon maltais",
-        ownerId: 1,
+        clientId: 1,
       },
       {
         id: 3,
@@ -118,7 +118,7 @@ export const client = {
         subtype: null,
         sex: "Poulain",
         breed: "Portugais",
-        ownerId: 1,
+        clientId: 1,
       },
     ],
   },
