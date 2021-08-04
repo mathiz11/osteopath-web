@@ -8,10 +8,7 @@ import authService from "../services/authService";
 const Navbar: React.FC = () => {
   const [state, dispatch] = useStore();
 
-  const path = React.useMemo(
-    () => window.location.pathname,
-    [window.location.pathname]
-  );
+  const path = React.useMemo(() => window.location.pathname, []);
 
   const logout = async () => {
     const response = await authService.logout();
