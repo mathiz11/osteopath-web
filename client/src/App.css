@@ -35,21 +35,26 @@ body button,
 body a {
   transition: all 0.2s ease-out;
   border: unset;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 10px;
+  margin: 0 0.5rem;
+  cursor: pointer;
 }
 
 button.primary,
 a.primary {
   color: #fff;
-  outline: none;
-  font-family: "Raleway", sans-serif;
-  font-size: 16px;
+  /* outline: none; */
   background-color: #7bbf99;
-  font-weight: 500;
+}
+
+button.primary,
+a.primary,
+button.secondary,
+a.secondary {
   padding: 1rem 2rem;
-  border-radius: 10px;
-  margin: 0 0.5rem;
-  border: none;
-  cursor: pointer;
 }
 
 button.primary:hover,
@@ -59,13 +64,12 @@ a.primary:hover {
 
 button.secondary,
 a.secondary {
-  color: #7bbf99;
   background-color: #fff;
-  border: 2px solid #7bbf99;
-  font-weight: 500;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  margin: 0 0.5rem;
+}
+
+button.secondary:hover,
+a.secondary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 button.circle {
