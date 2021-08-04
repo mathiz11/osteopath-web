@@ -95,9 +95,20 @@ const HomePage: React.FC = () => {
           {alert && (
             <Alert
               title="Supprimer client"
-              text={`Voulez-vous vraiment supprimez votre client : ${getClientFullName(
-                clients.filter((client) => client.id === alert).pop()
-              )} ?`}
+              text={
+                <>
+                  <p>
+                    Voulez-vous vraiment supprimez votre client :
+                    {" " +
+                      getClientFullName(
+                        clients.filter((client) => client.id === alert).pop()
+                      ) +
+                      " "}
+                    ?
+                  </p>
+                  <p>(Tous ces animaux seront supprimés définitivement)</p>
+                </>
+              }
               type="delete"
               buttonName="Supprimer"
               close={closeAlert}

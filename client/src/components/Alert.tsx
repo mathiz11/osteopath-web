@@ -1,8 +1,9 @@
+import { ReactElement } from "react";
 import "../styles/Alert.css";
 
 type AlertProps = {
   title: string;
-  text: string;
+  text: ReactElement;
   type: "delete";
   buttonName: string;
   close: () => void;
