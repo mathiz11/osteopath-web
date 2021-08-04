@@ -34,7 +34,8 @@
   font-size: 12px;
 }
 
-.form-control.error input {
+.form-control.error input,
+.form-control.error textarea {
   border-color: #db2828;
 }
 
