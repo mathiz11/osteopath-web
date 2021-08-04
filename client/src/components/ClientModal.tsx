@@ -26,7 +26,6 @@ const ClientModal = ({
   refreshView,
 }: ClientModalProps) => {
   const [, dispatch] = useStore();
-  console.log(formValues);
 
   return isVisible ? (
     <Modal
