@@ -1,10 +1,10 @@
 import React from "react";
+import { FaPhoneAlt } from "react-icons/fa";
+import { HiDotsVertical } from "react-icons/hi";
+import { useHistory } from "react-router-dom";
 import { Client } from "../entities/Client";
 import "../styles/ClientList.css";
-import { HiDotsVertical } from "react-icons/hi";
-import { FaPhoneAlt } from "react-icons/fa";
 import ActionsMenu, { ActionsMenuProps } from "./ActionsMenu";
-import { Link, useHistory } from "react-router-dom";
 
 type ClientsProps = {
   clients: Client[];
