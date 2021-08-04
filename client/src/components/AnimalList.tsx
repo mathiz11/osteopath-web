@@ -81,14 +81,13 @@ const AnimalList = ({ animals }: AnimalProps) => {
           </div>
         </div>
       ))}
-      {actionsMenu.clientId && (
-        <ActionsMenu
-          close={closeActionsMenu}
-          editEvent={editAnimal}
-          deleteEvent={deleteAnimal}
-          values={actionsMenu}
-        />
-      )}
+      <ActionsMenu
+        isVisible={actionsMenu.clientId !== undefined}
+        close={closeActionsMenu}
+        editEvent={editAnimal}
+        deleteEvent={deleteAnimal}
+        values={actionsMenu}
+      />
     </div>
   );
 };
