@@ -11,10 +11,15 @@ import ActionsMenu, {
 
 type ClientsProps = {
   clients: Client[];
-  editEvent: (clientId: number) => void;
+  editEvent: (clientId: number | undefined) => void;
+  deleteEvent: (clientId: number | undefined) => void;
 };
 
-const ClientList: React.FC<ClientsProps> = ({ clients, editEvent }) => {
+const ClientList: React.FC<ClientsProps> = ({
+  clients,
+  editEvent,
+  deleteEvent,
+}) => {
   const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
     DEFAULT_ACTIONS_MENU_VALUES
   );
@@ -39,13 +44,6 @@ const ClientList: React.FC<ClientsProps> = ({ clients, editEvent }) => {
           : e.nativeEvent.pageY,
       clientId,
     });
-  };
-
-  const editClient = (clientId: number | undefined) => {
-    if (clientId) {
-      // send event to parent
-      editEvent(clientId);
-    }
   };
 
   return (
@@ -73,7 +71,8 @@ const ClientList: React.FC<ClientsProps> = ({ clients, editEvent }) => {
       {actionsMenu.clientId && (
         <ActionsMenu
           close={closeActionsMenu}
-          editEvent={editClient}
+          editEvent={editEvent}
+          deleteEvent={deleteEvent}
           values={actionsMenu}
         />
       )}
