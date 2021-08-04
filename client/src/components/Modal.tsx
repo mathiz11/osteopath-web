@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 import { FaTimes } from "react-icons/fa";
 import "../styles/Modal.css";
 
