@@ -20,6 +20,7 @@ export const ClientSchema = Yup.object().shape({
     .required("Ce champ est obligatoire"),
   email: Yup.string()
     .email("L'email est invalide")
+    .max(100, "L'email est trop long")
     .required("Ce champ est obligatoire"),
   address: Yup.string().required("Ce champ est obligatoire"),
 });
