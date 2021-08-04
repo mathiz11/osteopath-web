@@ -1,36 +1,56 @@
 import React from "react";
+import { MessageValues } from "./Message";
 
-type StateType = {
+type State = {
   isAuth: boolean;
+  message?: MessageValues;
 };
 
-export enum ACTION {
+export enum ActionType {
   LOG_IN = "login",
   LOG_OUT = "logout",
+  SET_MESSAGE = "set_message",
+  REMOVE_MESSAGE = "remove_message",
 }
 
-type ActionType = {
-  type: ACTION.LOG_IN | ACTION.LOG_OUT;
+export type Action = {
+  type:
+    | ActionType.LOG_IN
+    | ActionType.LOG_OUT
+    | ActionType.SET_MESSAGE
+    | ActionType.REMOVE_MESSAGE;
+  payload: MessageValues;
 };
 
-const initialValues: StateType = {
+const initialValues: State = {
   isAuth: false,
 };
 
-export const Context = React.createContext<[StateType, React.Dispatch<any>]>([
+export const Context = React.createContext<[State, React.Dispatch<any>]>([
   initialValues,
   () => {},
 ]);
 
-const reducer = (state: StateType, action: ActionType) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case ACTION.LOG_IN:
+    case ActionType.LOG_IN:
       return {
+        ...state,
         isAuth: true,
       };
-    case ACTION.LOG_OUT:
+    case ActionType.LOG_OUT:
       return {
+        ...state,
         isAuth: false,
+      };
+    case ActionType.SET_MESSAGE:
+      return {
+        ...state,
+        message: action.payload,
+      };
+    case ActionType.REMOVE_MESSAGE:
+      return {
+        isAuth: state.isAuth,
       };
     default:
       return state;
