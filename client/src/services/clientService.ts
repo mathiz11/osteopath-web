@@ -41,6 +41,20 @@ const create = async (client: ClientValues): Promise<Response> => {
   });
 };
 
-const clientService = { getAll, getOne, create };
+const edit = async (client: ClientValues): Promise<Response> => {
+  return fetchManager({
+    url: process.env.REACT_APP_API_URL + "/clients",
+    options: {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    body: JSON.stringify(client),
+  });
+};
+
+const clientService = { getAll, getOne, create, edit };
 
 export default clientService;
