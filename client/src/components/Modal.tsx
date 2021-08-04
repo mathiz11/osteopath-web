@@ -9,7 +9,7 @@ type ModalProps = {
 
 const Modal: FC<ModalProps> = ({ title, close, children }) => {
   return (
-    <div className="modal-container">
+    <div className="modal-container" onClick={close}>
       <div className="modal">
         <div className="header">
           <span>{title}</span>
