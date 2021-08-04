@@ -1,15 +1,13 @@
-import { ReactElement } from "react";
+import { FC, ReactElement } from "react";
 import { FaTimes } from "react-icons/fa";
 import "../styles/Modal.css";
 
 type ModalProps = {
-  title?: string;
+  title: string;
   close: () => void;
-  entity: any;
-  form: ReactElement;
 };
 
-const Modal = ({ title, close, entity, form }: ModalProps) => {
+const Modal: FC<ModalProps> = ({ title, close, children }) => {
   return (
     <div className="modal">
       <div className="modal-content">
@@ -19,13 +17,7 @@ const Modal = ({ title, close, entity, form }: ModalProps) => {
             <FaTimes size="16" />
           </button>
         </div>
-        <div className="content">{form}</div>
-        {!form && (
-          <div className="footer">
-            <button className="secondary">Annuler</button>
-            <button className="primary">Ajouter</button>
-          </div>
-        )}
+        <div className="content">{children}</div>
       </div>
     </div>
   );
