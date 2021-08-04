@@ -49,6 +49,12 @@ const AnimalList = ({ animals }: AnimalProps) => {
     }
   };
 
+  const deleteAnimal = (animalId: number | undefined) => {
+    if (animalId) {
+      console.log(animalId);
+    }
+  };
+
   return (
     <div className="animals">
       {animalss?.map((animal) => (
@@ -79,6 +85,7 @@ const AnimalList = ({ animals }: AnimalProps) => {
         <ActionsMenu
           close={closeActionsMenu}
           editEvent={editAnimal}
+          deleteEvent={deleteAnimal}
           values={actionsMenu}
         />
       )}
