@@ -55,6 +55,19 @@ const edit = async (client: ClientValues): Promise<Response> => {
   });
 };
 
-const clientService = { getAll, getOne, create, edit };
+const remove = async (id: number): Promise<Response> => {
+  return fetchManager({
+    url: process.env.REACT_APP_API_URL + "/clients/" + id,
+    options: {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  });
+};
+
+const clientService = { getAll, getOne, create, edit, remove };
 
 export default clientService;
