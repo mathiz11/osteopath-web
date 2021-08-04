@@ -1,0 +1,57 @@
+.alert-container {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: flex;
+  align-items: center;
+}
+
+.alert {
+  background-color: #fff;
+  margin: auto;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.alert button.primary.delete {
+  background-color: #db2828;
+}
+
+.alert .header {
+  padding-left: 1rem;
+  padding-top: 1rem;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.alert .content {
+  padding: 3rem 1rem;
+}
+
+.alert .footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 380px) {
+  .alert .footer {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .alert .footer button.primary {
+    margin-top: 0.5rem;
+  }
+  .alert .header {
+    text-align: center;
+    padding-left: unset;
+  }
+  .alert .content {
+    padding: 2rem 0;
+  }
+} ;
