@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
             validationSchema={LoginSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
+            {({ values, handleChange, handleSubmit, errors }) => (
               <form onSubmit={handleSubmit}>
                 <Message />
                 <Input
