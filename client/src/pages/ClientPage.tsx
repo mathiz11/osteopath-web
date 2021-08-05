@@ -19,6 +19,7 @@ import AnimalModal from "../components/AnimalModal";
 import { AnimalValues, DEFAULT_ANIMAL_VALUES } from "../schemas/animalSchema";
 import AnimalAlert from "../components/AnimalAlert";
 import animalService from "../services/animalService";
+import { Animal } from "../entities/Animal";
 
 const ClientPage = ({ match }: any) => {
   const [client, setClient] = React.useState<Client | undefined>();
@@ -60,17 +61,40 @@ const ClientPage = ({ match }: any) => {
     }
   };
 
+  const updateClient = (updatedClient: ClientValues) => {
+    if (client) {
+      setClient({ ...(updatedClient as Client), animals: client.animals });
+    }
+  };
+
   const deleteAnimal = async () => {
     if (client?.id && animalAlert) {
       const response = await animalService.remove(client.id, animalAlert);
 
       if (response.ok) {
-        const clientCopy = { ...client };
-        clientCopy.animals = clientCopy.animals.filter(
-          (animal) => animal.id !== animalAlert
-        );
-        setClient(clientCopy);
+        setClient({
+          ...client,
+          animals: client.animals.filter((animal) => animal.id !== animalAlert),
+        });
         closeAnimalAlert();
+      }
+    }
+  };
+
+  const updateAnimal = (animal: AnimalValues) => {
+    if (client) {
+      if (animalformValues.id) {
+        setClient({
+          ...client,
+          animals: client.animals.map((a) =>
+            a.id === animal.id ? (animal as Animal) : a
+          ),
+        });
+      } else {
+        setClient({
+          ...client,
+          animals: [...client.animals, animal as Animal],
+        });
       }
     }
   };
@@ -204,7 +228,7 @@ const ClientPage = ({ match }: any) => {
             isVisible={showClientModal}
             close={closeClientModal}
             formValues={clientformValues}
-            refreshView={getClient}
+            refreshView={updateClient}
           />
           <AnimalAlert
             isVisible={animalAlert !== undefined}
@@ -220,7 +244,7 @@ const ClientPage = ({ match }: any) => {
             isVisible={showAnimalModal}
             close={closeAnimalModal}
             formValues={animalformValues}
-            refreshView={getClient}
+            refreshView={updateAnimal}
             clientId={client?.id}
           />
         </div>
