@@ -5,6 +5,7 @@ import { createConnection } from "typeorm";
 import authRouter from "./routes/authRoute";
 import clientRouter from "./routes/clientRoute";
 import animalRouter from "./routes/animalRoute";
+import userRouter from "./routes/userRoute";
 require("dotenv").config();
 
 (async () => {
@@ -28,6 +29,7 @@ require("dotenv").config();
   app.use("/auth", authRouter);
   app.use("/clients", clientRouter);
   app.use("/", animalRouter);
+  app.use("/users", userRouter);
 
   // const user = new User();
   // user.firstname = "Mathis";
