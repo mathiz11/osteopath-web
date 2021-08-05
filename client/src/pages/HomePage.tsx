@@ -32,9 +32,19 @@ const HomePage = () => {
       const response = await clientService.remove(alert);
 
       if (response.ok) {
-        getAllClients();
+        setClients(clients.filter((client) => client.id !== alert));
         closeAlert();
       }
+    }
+  };
+
+  const updateClient = (client: ClientValues) => {
+    if (clientformValues.id) {
+      setClients(
+        clients.map((c) => (c.id === client.id ? (client as Client) : c))
+      );
+    } else {
+      setClients([...clients, client as Client]);
     }
   };
 
@@ -100,7 +110,7 @@ const HomePage = () => {
             isVisible={showModal}
             close={closeModal}
             formValues={clientformValues}
-            refreshView={getAllClients}
+            refreshView={updateClient}
           />
         </div>
       </div>
