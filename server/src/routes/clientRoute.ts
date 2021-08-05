@@ -10,7 +10,10 @@ const router = express.Router();
 router.get("/", isAuth, async (req, res) => {
   const clients = await getConnection()
     .getRepository(Client)
-    .find({ userId: req.user.id });
+    .find({
+      select: ["id", "firstname", "lastname", "email", "phone", "address"],
+      where: { userId: req.user.id },
+    });
 
   res.json({ clients });
 });
@@ -18,14 +21,31 @@ router.get("/", isAuth, async (req, res) => {
 router.get("/:id", isAuth, param("id").isInt(), async (req, res) => {
   const clientId = req.params.id;
 
-  const client = await getConnection()
+  let client = await getConnection()
     .getRepository(Client)
-    .findOne(clientId, {
-      where: { userId: req.user.id },
+    .findOne({
       relations: ["animals"],
+      where: { id: clientId, userId: req.user.id },
+      select: [
+        "id",
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "address",
+        "animals",
+      ],
     });
 
   if (client) {
+    client.animals = client.animals.map((animal) => ({
+      id: animal.id,
+      name: animal.name,
+      type: animal.type,
+      subtype: animal.subtype,
+      sex: animal.sex,
+      breed: animal.breed,
+    })) as any;
     res.json({ client });
   } else {
     res.status(404).json({ message: "client not found" });
@@ -45,7 +65,7 @@ router.post(
     const { firstname, lastname, email, phone, address } = req.body;
 
     try {
-      await getConnection().getRepository(Client).insert({
+      const result = await getConnection().getRepository(Client).insert({
         firstname,
         lastname,
         email,
@@ -54,7 +74,7 @@ router.post(
         userId: req.user.id,
       });
 
-      res.status(201).json({ message: "client created" });
+      res.status(201).json({ client: result.identifiers.pop() });
     } catch (e) {
       res.status(500).json({ message: "client creation error" });
     }
