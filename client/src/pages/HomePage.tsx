@@ -84,7 +84,7 @@ const HomePage = () => {
     <Layout>
       <div className="home">
         <div className="container">
-          <div className="header add-button">
+          <div className="header action-button">
             <h1>Clients</h1>
             <button className="primary" onClick={openModalToCreate}>
               <FaPlus />
