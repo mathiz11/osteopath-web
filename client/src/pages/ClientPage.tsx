@@ -197,7 +197,7 @@ const ClientPage = ({ match }: any) => {
                 </div>
               </div>
 
-              <div className="header add-button">
+              <div className="header action-button">
                 <h2>Animaux</h2>
                 <button className="primary" onClick={openAnimalModalToCreate}>
                   <FaPlus />
