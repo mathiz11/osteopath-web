@@ -24,6 +24,6 @@ export type Animal = {
   subtype: string | null;
   sex: string;
   breed: string;
-  clientId: number;
+  clientId?: number;
   // cards: Card[];
 };
