@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { AnimalSubtype, AnimalType } from "../entities/Animal";
+import { Animal, AnimalSubtype, AnimalType } from "../entities/Animal";
 import { AnimalSchema, AnimalValues } from "../schemas/animalSchema";
 import animalService from "../services/animalService";
 import { translateMessage } from "../utils/responseMessage";
@@ -12,7 +12,7 @@ type AnimalModalProps = {
   isVisible: boolean;
   close: () => void;
   formValues: AnimalValues;
-  refreshView: () => void;
+  refreshView: (animal: AnimalValues) => void;
   clientId: number | undefined;
 };
 
@@ -32,7 +32,11 @@ const AnimalModal = ({
         : await animalService.create(clientId, values);
 
       if (response.ok) {
-        refreshView();
+        if (!values.id) {
+          const jsonResponse = await response.json();
+          values.id = jsonResponse.animal.id;
+        }
+        refreshView(values);
         close();
       } else {
         const jsonResponse = await response.json();
