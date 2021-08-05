@@ -1,0 +1,28 @@
+.profile .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile .full-name {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 600px) {
+  .profile .full-name {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile form button.primary {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: all 0.5s;
+}
+
+.profile form button.primary.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
