@@ -1,14 +1,11 @@
-import { Client } from "./Client";
-
 export type User = {
-  id: string;
+  id: number;
   firstname: string;
   lastname: string;
   email: string;
-  password: string;
+  password?: string;
   numberOA: string;
   phone: string;
   address: string;
-  tokenVersion: number;
-  clients: Client[];
+  tokenVersion?: number;
 };
