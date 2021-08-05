@@ -9,7 +9,8 @@
 }
 
 .form-control input,
-.form-control textarea {
+.form-control textarea,
+.form-control select {
   margin: 0.5rem 0;
   padding: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -23,8 +24,30 @@
   resize: none;
 }
 
+.form-control select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+.form-control .select {
+  position: relative;
+}
+
+.form-control .select select {
+  width: 100%;
+}
+
+.form-control .select svg {
+  position: absolute;
+  top: 26px;
+  right: 1.2rem;
+}
+
 .form-control input:focus,
-.form-control textarea:focus {
+.form-control textarea:focus,
+.form-control select:focus {
   outline: none;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
@@ -35,11 +58,13 @@
 }
 
 .form-control.error input,
-.form-control.error textarea {
+.form-control.error textarea,
+.form-control.error select {
   border-color: #db2828;
 }
 
 .form-control.error input:focus,
-.form-control.error textarea:focus {
+.form-control.error textarea:focus,
+.form-control.error select:focus {
   box-shadow: 0 0 0 1px #db2828;
 }
