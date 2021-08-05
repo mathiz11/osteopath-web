@@ -15,13 +15,22 @@ import ActionsMenu, {
 } from "../components/ActionsMenu";
 import ClientAlert from "../components/ClientAlert";
 import { useHistory } from "react-router-dom";
+import AnimalModal from "../components/AnimalModal";
+import { AnimalValues, DEFAULT_ANIMAL_VALUES } from "../schemas/animalSchema";
+import AnimalAlert from "../components/AnimalAlert";
+import animalService from "../services/animalService";
 
 const ClientPage = ({ match }: any) => {
   const [client, setClient] = React.useState<Client | undefined>();
-  const [showModal, setShowModal] = React.useState<boolean>(false);
-  const [alert, setAlert] = React.useState<number | undefined>();
+  const [showClientModal, setShowClientModal] = React.useState<boolean>(false);
+  const [showAnimalModal, setShowAnimalModal] = React.useState<boolean>(false);
+  const [clientAlert, setClientAlert] = React.useState<number | undefined>();
+  const [animalAlert, setAnimalAlert] = React.useState<number | undefined>();
   const [clientformValues, setClientFormValues] = React.useState<ClientValues>(
     DEFAULT_CLIENT_VALUES
+  );
+  const [animalformValues, setAnimalFormValues] = React.useState<AnimalValues>(
+    DEFAULT_ANIMAL_VALUES
   );
   const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
     DEFAULT_ACTIONS_MENU_VALUES
@@ -41,12 +50,27 @@ const ClientPage = ({ match }: any) => {
   };
 
   const deleteClient = async () => {
-    if (alert) {
-      const response = await clientService.remove(alert);
+    if (clientAlert) {
+      const response = await clientService.remove(clientAlert);
 
       if (response.ok) {
-        closeAlert();
+        closeClientAlert();
         history.push("/");
+      }
+    }
+  };
+
+  const deleteAnimal = async () => {
+    if (client?.id && animalAlert) {
+      const response = await animalService.remove(client.id, animalAlert);
+
+      if (response.ok) {
+        const clientCopy = { ...client };
+        clientCopy.animals = clientCopy.animals.filter(
+          (animal) => animal.id !== animalAlert
+        );
+        setClient(clientCopy);
+        closeAnimalAlert();
       }
     }
   };
@@ -62,28 +86,60 @@ const ClientPage = ({ match }: any) => {
         e.nativeEvent.y + 130 > window.innerHeight
           ? e.nativeEvent.pageY - 130
           : e.nativeEvent.pageY,
-      clientId: client?.id,
+      id: client?.id,
     });
   };
 
   const closeActionsMenu = () => setActionsMenu(DEFAULT_ACTIONS_MENU_VALUES);
 
-  const openModalToEdit = (clientId: number | undefined) => {
+  const openClientModalToEdit = (clientId: number | undefined) => {
     if (clientId) {
       setClientFormValues(client as ClientValues);
-      setShowModal(true);
+      setShowClientModal(true);
     }
   };
 
-  const closeModal = () => setShowModal(false);
+  const closeClientModal = () => setShowClientModal(false);
 
-  const openAlertToDelete = (clientId: number | undefined) => {
+  const openClientAlertToDelete = (clientId: number | undefined) => {
     if (clientId) {
-      setAlert(clientId);
+      setClientAlert(clientId);
     }
   };
 
-  const closeAlert = () => setAlert(undefined);
+  const closeClientAlert = () => setClientAlert(undefined);
+
+  const openAnimalModalToCreate = () => {
+    if (animalformValues.id) {
+      setAnimalFormValues(DEFAULT_ANIMAL_VALUES);
+    }
+    setShowAnimalModal(true);
+  };
+
+  const openAnimalModalToEdit = (animalId: number | undefined) => {
+    if (animalId && client) {
+      setAnimalFormValues(
+        client.animals
+          .filter((animal) => animal.id === animalId)
+          .map((animal) => {
+            delete animal.clientId;
+            return animal;
+          })
+          .pop() as AnimalValues
+      );
+      setShowAnimalModal(true);
+    }
+  };
+
+  const closeAnimalModal = () => setShowAnimalModal(false);
+
+  const openAnimalAlertToDelete = (animalId: number | undefined) => {
+    if (animalId) {
+      setAnimalAlert(animalId);
+    }
+  };
+
+  const closeAnimalAlert = () => setAnimalAlert(undefined);
 
   return (
     <Layout>
@@ -119,32 +175,53 @@ const ClientPage = ({ match }: any) => {
 
               <div className="header add-button">
                 <h2>Animaux</h2>
-                <button className="primary" onClick={(e) => handleClick(e)}>
+                <button className="primary" onClick={openAnimalModalToCreate}>
                   <FaPlus />
                   <span>Ajouter</span>
                 </button>
               </div>
-              <AnimalList animals={client.animals} />
+              <AnimalList
+                animals={client.animals}
+                editEvent={openAnimalModalToEdit}
+                deleteEvent={openAnimalAlertToDelete}
+              />
             </>
           )}
           <ActionsMenu
-            isVisible={actionsMenu.clientId !== undefined}
+            isVisible={actionsMenu.id !== undefined}
             close={closeActionsMenu}
-            editEvent={openModalToEdit}
-            deleteEvent={openAlertToDelete}
+            editEvent={openClientModalToEdit}
+            deleteEvent={openClientAlertToDelete}
             values={actionsMenu}
           />
           <ClientAlert
-            isVisible={alert !== undefined}
+            isVisible={clientAlert !== undefined}
             client={client}
-            closeEvent={closeAlert}
+            closeEvent={closeClientAlert}
             confirmEvent={deleteClient}
           />
           <ClientModal
-            isVisible={showModal}
-            close={closeModal}
+            isVisible={showClientModal}
+            close={closeClientModal}
             formValues={clientformValues}
             refreshView={getClient}
+          />
+          <AnimalAlert
+            isVisible={animalAlert !== undefined}
+            animalName={
+              client?.animals
+                .filter((animal) => animal.id === animalAlert)
+                .pop()?.name
+            }
+            closeEvent={closeAnimalAlert}
+            confirmEvent={deleteAnimal}
+          />
+          <AnimalModal
+            isVisible={showAnimalModal}
+            close={closeAnimalModal}
+            formValues={animalformValues}
+            refreshView={getClient}
+            clientId={client?.id}
           />
         </div>
       </div>
