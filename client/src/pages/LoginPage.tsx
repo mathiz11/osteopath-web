@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
 
   const initialValues: LoginValues = DEFAULT_LOGIN_VALUES;
 
-  const handleSubmit = async (values: LoginValues) => {
+  const submitForm = async (values: LoginValues) => {
     const response = await authService.login(values);
 
     if (response.ok) {
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
             validateOnBlur={false}
             validateOnChange={false}
             validationSchema={LoginSchema}
-            onSubmit={handleSubmit}
+            onSubmit={submitForm}
           >
             {({ values, handleChange, handleSubmit, errors }) => (
               <form onSubmit={handleSubmit}>

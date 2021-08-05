@@ -22,6 +22,26 @@ const ClientModal = ({
 }: ClientModalProps) => {
   const [, dispatch] = useStore();
 
+  const submitForm = async (values: ClientValues) => {
+    const response = formValues.id
+      ? await clientService.edit(values)
+      : await clientService.create(values);
+
+    if (response.ok) {
+      refreshView();
+      close();
+    } else {
+      const jsonResponse = await response.json();
+      dispatch({
+        type: ActionType.SET_MESSAGE,
+        payload: {
+          type: MessageType.ERROR,
+          text: translateMessage(jsonResponse.message, response.ok),
+        },
+      });
+    }
+  };
+
   return isVisible ? (
     <Modal
       close={close}
@@ -32,25 +52,7 @@ const ClientModal = ({
         validateOnChange={false}
         validateOnBlur={false}
         validationSchema={ClientSchema}
-        onSubmit={async (values) => {
-          const response = formValues.id
-            ? await clientService.edit(values)
-            : await clientService.create(values);
-
-          if (response.ok) {
-            refreshView();
-            close();
-          } else {
-            const jsonResponse = await response.json();
-            dispatch({
-              type: ActionType.SET_MESSAGE,
-              payload: {
-                type: MessageType.ERROR,
-                text: translateMessage(jsonResponse.message, response.ok),
-              },
-            });
-          }
-        }}
+        onSubmit={submitForm}
       >
         {({ values, handleChange, handleSubmit, errors }) => (
           <form onSubmit={handleSubmit}>

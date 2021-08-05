@@ -25,6 +25,28 @@ const AnimalModal = ({
 }: AnimalModalProps) => {
   const [, dispatch] = useStore();
 
+  const submitForm = async (values: AnimalValues) => {
+    if (clientId) {
+      const response = formValues.id
+        ? await animalService.edit(clientId, values)
+        : await animalService.create(clientId, values);
+
+      if (response.ok) {
+        refreshView();
+        close();
+      } else {
+        const jsonResponse = await response.json();
+        dispatch({
+          type: ActionType.SET_MESSAGE,
+          payload: {
+            type: MessageType.ERROR,
+            text: translateMessage(jsonResponse.message, response.ok),
+          },
+        });
+      }
+    }
+  };
+
   return isVisible ? (
     <Modal
       close={close}
@@ -35,27 +57,7 @@ const AnimalModal = ({
         validateOnChange={false}
         validateOnBlur={false}
         validationSchema={AnimalSchema}
-        onSubmit={async (values) => {
-          if (clientId) {
-            const response = formValues.id
-              ? await animalService.edit(clientId, values)
-              : await animalService.create(clientId, values);
-
-            if (response.ok) {
-              refreshView();
-              close();
-            } else {
-              const jsonResponse = await response.json();
-              dispatch({
-                type: ActionType.SET_MESSAGE,
-                payload: {
-                  type: MessageType.ERROR,
-                  text: translateMessage(jsonResponse.message, response.ok),
-                },
-              });
-            }
-          }
-        }}
+        onSubmit={submitForm}
       >
         {({ values, handleChange, handleSubmit, errors }) => (
           <form onSubmit={handleSubmit}>
