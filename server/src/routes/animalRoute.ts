@@ -75,7 +75,7 @@ router.post(
         });
 
       if (client) {
-        await getConnection()
+        const result = await getConnection()
           .getRepository(Animal)
           .insert({
             name,
@@ -86,7 +86,7 @@ router.post(
             clientId,
           });
 
-        res.status(201).json({ message: "animal created" });
+        res.status(201).json({ animal: result.identifiers.pop() });
       } else {
         res.status(404).json({ message: "client not found" });
       }
