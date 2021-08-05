@@ -58,17 +58,14 @@ a.secondary {
 }
 
 button.primary:hover,
-a.primary:hover {
+a.primary:hover,
+button.secondary:hover,
+a.secondary:hover {
   opacity: 0.8;
 }
 
 button.secondary,
 a.secondary {
-  background-color: #fff;
-}
-
-button.secondary:hover,
-a.secondary:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -105,7 +102,7 @@ button.circle.pure:hover {
 
 /* HEADER */
 
-.header.add-button {
+.header.action-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,12 +110,12 @@ button.circle.pure:hover {
   padding: 0 1rem 0 1.5rem;
 }
 
-.header.add-button button {
+.header.action-button button {
   display: flex;
   align-items: center;
 }
 
-.header.add-button button span {
+.header.action-button button span {
   margin-left: 0.5rem;
 }
 
