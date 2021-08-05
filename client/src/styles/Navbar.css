@@ -37,11 +37,11 @@ header .actions button:hover {
 }
 
 header .actions a.active,
-header .actions button:hove {
+header .actions button:hover {
   color: #7bbf99;
 }
 
 header .actions a.active:hover,
-header .actions button:hove {
+header .actions button:hover {
   color: #fff;
 }
