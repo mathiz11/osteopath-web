@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { Animal, AnimalSubtype, AnimalType } from "../entities/Animal";
+import { AnimalSubtype, AnimalType } from "../entities/Animal";
 import { AnimalSchema, AnimalValues } from "../schemas/animalSchema";
 import animalService from "../services/animalService";
 import { translateMessage } from "../utils/responseMessage";
