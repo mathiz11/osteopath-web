@@ -11,7 +11,7 @@ type ClientModalProps = {
   isVisible: boolean;
   close: () => void;
   formValues: ClientValues;
-  refreshView: () => void;
+  refreshView: (client: ClientValues) => void;
 };
 
 const ClientModal = ({
@@ -28,7 +28,11 @@ const ClientModal = ({
       : await clientService.create(values);
 
     if (response.ok) {
-      refreshView();
+      if (!values.id) {
+        const jsonResponse = await response.json();
+        values.id = jsonResponse.client.id;
+      }
+      refreshView(values);
       close();
     } else {
       const jsonResponse = await response.json();
