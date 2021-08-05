@@ -4,13 +4,13 @@ import "../styles/ActionsMenu.css";
 export type ActionsMenuValues = {
   x: number | undefined;
   y: number | undefined;
-  clientId: number | undefined;
+  id: number | undefined;
 };
 
 export const DEFAULT_ACTIONS_MENU_VALUES: ActionsMenuValues = {
   x: undefined,
   y: undefined,
-  clientId: undefined,
+  id: undefined,
 };
 
 type ActionsMenuProps = {
@@ -50,7 +50,7 @@ const ActionsMenu = ({
   deleteEvent,
   close,
 }: ActionsMenuProps) => {
-  const { x, y, clientId } = values;
+  const { x, y, id } = values;
   const ref = React.useRef<HTMLDivElement>(null);
   useOutsideAlerter(ref, close);
 
@@ -64,8 +64,8 @@ const ActionsMenu = ({
 
   return isVisible ? (
     <div ref={ref} style={style} className="actions-menu">
-      <button onClick={() => editEvent(clientId)}>Modifier</button>
-      <button onClick={() => deleteEvent(clientId)}>Supprimer</button>
+      <button onClick={() => editEvent(id)}>Modifier</button>
+      <button onClick={() => deleteEvent(id)}>Supprimer</button>
     </div>
   ) : null;
 };
