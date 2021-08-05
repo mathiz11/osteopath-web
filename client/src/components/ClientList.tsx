@@ -42,7 +42,7 @@ const ClientList: React.FC<ClientsProps> = ({
         e.nativeEvent.y + 130 > window.innerHeight
           ? e.nativeEvent.pageY - 130
           : e.nativeEvent.pageY,
-      clientId,
+      id: clientId,
     });
   };
 
@@ -69,7 +69,7 @@ const ClientList: React.FC<ClientsProps> = ({
         </div>
       ))}
       <ActionsMenu
-        isVisible={actionsMenu.clientId !== undefined}
+        isVisible={actionsMenu.id !== undefined}
         close={closeActionsMenu}
         editEvent={editEvent}
         deleteEvent={deleteEvent}
