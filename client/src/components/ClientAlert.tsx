@@ -26,7 +26,7 @@ const ClientAlert = ({
             Voulez-vous vraiment supprimez votre client :
             {getClientFullName(client)}?
           </p>
-          <p>(Tous ces animaux seront supprimés définitivement)</p>
+          <p>(Tous ces animaux et fiches seront supprimés définitivement)</p>
         </>
       }
       type="delete"
