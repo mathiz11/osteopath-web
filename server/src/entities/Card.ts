@@ -70,6 +70,6 @@ export class Card {
   @Column({ length: 100, nullable: true })
   activityRetake: string;
 
-  @ManyToOne(() => Animal, (animal) => animal.cards)
+  @ManyToOne(() => Animal, (animal) => animal.cards, { onDelete: "CASCADE" })
   animal: Animal;
 }
