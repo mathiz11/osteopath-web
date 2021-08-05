@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Animal } from "../entities/Animal";
 import "../styles/AnimalList.css";
 import { HiDotsVertical } from "react-icons/hi";
-import { client } from "../data";
 import ActionsMenu, {
   ActionsMenuValues,
   DEFAULT_ACTIONS_MENU_VALUES,
@@ -12,14 +11,14 @@ import { getAnimalImageSrc } from "../utils/animals";
 
 type AnimalProps = {
   animals?: Animal[];
+  editEvent: (animalId: number | undefined) => void;
+  deleteEvent: (animalId: number | undefined) => void;
 };
 
-const AnimalList = ({ animals }: AnimalProps) => {
+const AnimalList = ({ animals, editEvent, deleteEvent }: AnimalProps) => {
   const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
     DEFAULT_ACTIONS_MENU_VALUES
   );
-
-  let animalss = client.client.animals;
 
   const history = useHistory();
 
@@ -27,7 +26,7 @@ const AnimalList = ({ animals }: AnimalProps) => {
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    clientId: number
+    animalId: number
   ) => {
     e.stopPropagation();
     setActionsMenu({
@@ -39,25 +38,13 @@ const AnimalList = ({ animals }: AnimalProps) => {
         e.nativeEvent.y + 130 > window.innerHeight
           ? e.nativeEvent.pageY - 130
           : e.nativeEvent.pageY,
-      clientId,
+      id: animalId,
     });
-  };
-
-  const editAnimal = (animalId: number | undefined) => {
-    if (animalId) {
-      console.log(animalId);
-    }
-  };
-
-  const deleteAnimal = (animalId: number | undefined) => {
-    if (animalId) {
-      console.log(animalId);
-    }
   };
 
   return (
     <div className="animals">
-      {animalss?.map((animal) => (
+      {animals?.map((animal) => (
         <div
           onClick={() => history.push(`/animal/${animal.id}`)}
           key={`client${animal.id}`}
@@ -82,10 +69,10 @@ const AnimalList = ({ animals }: AnimalProps) => {
         </div>
       ))}
       <ActionsMenu
-        isVisible={actionsMenu.clientId !== undefined}
+        isVisible={actionsMenu.id !== undefined}
         close={closeActionsMenu}
-        editEvent={editAnimal}
-        deleteEvent={deleteAnimal}
+        editEvent={editEvent}
+        deleteEvent={deleteEvent}
         values={actionsMenu}
       />
     </div>
