@@ -58,13 +58,7 @@ const HomePage = () => {
   const openModalToEdit = (clientId: number | undefined) => {
     if (clientId) {
       setClientFormValues(
-        clients
-          .filter((client) => client.id === clientId)
-          .map((client) => {
-            delete client.userId;
-            return client;
-          })
-          .pop() as ClientValues
+        clients.filter((client) => client.id === clientId).pop() as ClientValues
       );
       setShowModal(true);
     }
