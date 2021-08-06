@@ -1,21 +1,27 @@
 import React from "react";
+import { HiDotsVertical } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
 import { Animal } from "../entities/Animal";
 import "../styles/AnimalList.css";
-import { HiDotsVertical } from "react-icons/hi";
+import { getAnimalImageSrc } from "../utils/animals";
 import ActionsMenu, {
   ActionsMenuValues,
   DEFAULT_ACTIONS_MENU_VALUES,
 } from "./ActionsMenu";
-import { getAnimalImageSrc } from "../utils/animals";
 
 type AnimalProps = {
   animals?: Animal[];
   editEvent: (animalId: number | undefined) => void;
   deleteEvent: (animalId: number | undefined) => void;
+  clientId: number;
 };
 
-const AnimalList = ({ animals, editEvent, deleteEvent }: AnimalProps) => {
+const AnimalList = ({
+  animals,
+  editEvent,
+  deleteEvent,
+  clientId,
+}: AnimalProps) => {
   const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
     DEFAULT_ACTIONS_MENU_VALUES
   );
@@ -46,12 +52,14 @@ const AnimalList = ({ animals, editEvent, deleteEvent }: AnimalProps) => {
     <div className="animals">
       {animals?.map((animal) => (
         <div
-          onClick={() => history.push(`/animal/${animal.id}`)}
+          onClick={() =>
+            history.push(`/client/${clientId}/animal/${animal.id}`)
+          }
           key={`client${animal.id}`}
           className="animals-item"
         >
           <div className="top">
-            <img src={getAnimalImageSrc(animal)} alt="dog" />
+            <img src={getAnimalImageSrc(animal)} alt={animal.type} />
             <div className="header-info">
               <span className="name">{animal.name}</span>
               <span className="breed">{animal.breed}</span>
