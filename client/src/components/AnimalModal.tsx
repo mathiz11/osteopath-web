@@ -54,7 +54,7 @@ const AnimalModal = ({
   return isVisible ? (
     <Modal
       close={close}
-      title={formValues.id ? "Modifier animal" : "Ajouter un client"}
+      title={formValues.id ? "Modifier animal" : "Ajouter un animal"}
     >
       <Formik
         initialValues={formValues}
