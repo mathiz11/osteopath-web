@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import AnimalAlert from "../components/AnimalAlert";
 import AnimalModal from "../components/AnimalModal";
 import Layout from "../components/Layout";
 import { Animal } from "../entities/Animal";
 import { AnimalValues, DEFAULT_ANIMAL_VALUES } from "../schemas/animalSchema";
+import { CardValues, DEFAULT_CARD_VALUES } from "../schemas/cardSchema";
 import animalService from "../services/animalService";
 import "../styles/AnimalPage.css";
 import { getAnimalImageSrc } from "../utils/animals";
 
-const AnimalPage = ({ match }: any) => {
+type Params = {
+  clientId: string;
+  animalId: string;
+};
+
+const AnimalPage = () => {
   const [animal, setAnimal] = useState<Animal | undefined>();
   const [showAnimalModal, setShowAnimalModal] = useState<boolean>(false);
   const [showAnimalAlert, setShowAnimalAlert] = useState<boolean>(false);
   const [animalformValues, setAnimalFormValues] = useState<AnimalValues>(
     DEFAULT_ANIMAL_VALUES
   );
-  const history = useHistory();
+  const [cardFormValues, setCardFormValues] =
+    useState<CardValues>(DEFAULT_CARD_VALUES);
+  let history = useHistory();
+  const { clientId, animalId } = useParams<Params>();
 
   useEffect(() => {
     getAnimal();
   }, []);
 
   const getAnimal = async () => {
-    const { clientId, animalId } = match.params;
-    if (clientId && animalId) {
-      const response = await animalService.getOne(clientId, animalId);
-      const jsonResponse = await response.json();
-      setAnimal(jsonResponse.animal);
-    }
+    const response = await animalService.getOne(+clientId, +animalId);
+    const jsonResponse = await response.json();
+    setAnimal(jsonResponse.animal);
   };
 
   const updateAnimal = (updatedAnimal: AnimalValues) => {
@@ -40,14 +46,11 @@ const AnimalPage = ({ match }: any) => {
   };
 
   const deleteAnimal = async () => {
-    const { clientId, animalId } = match.params;
-    if (clientId && animalId) {
-      const response = await animalService.remove(clientId, animalId);
+    const response = await animalService.remove(+clientId, +animalId);
 
-      if (response.ok) {
-        closeAnimalAlert();
-        history.push("/client/" + clientId);
-      }
+    if (response.ok) {
+      closeAnimalAlert();
+      history.push("/client/" + clientId);
     }
   };
 
@@ -86,10 +89,16 @@ const AnimalPage = ({ match }: any) => {
               </div>
               <div className="header action-button">
                 <h2>Fiches</h2>
-                <button className="primary">
+                <Link
+                  to={{
+                    pathname: `/client/${clientId}/animal/${animalId}/card/edit`,
+                    state: { formValues: cardFormValues },
+                  }}
+                  className="primary"
+                >
                   <FaPlus />
                   <span>Ajouter</span>
-                </button>
+                </Link>
               </div>
             </>
           )}
@@ -104,7 +113,7 @@ const AnimalPage = ({ match }: any) => {
             close={closeAnimalModal}
             formValues={animalformValues}
             refreshView={updateAnimal}
-            clientId={match.params.clientId}
+            clientId={+clientId}
           />
         </div>
       </div>
