@@ -7,6 +7,5 @@ export type Client = {
   email: string;
   phone: string;
   address: string;
-  userId?: number;
   animals: Animal[];
 };
