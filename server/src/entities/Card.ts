@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Animal } from "./Animal";
 import { File } from "./File";
@@ -16,7 +17,10 @@ export class Card {
   id: string;
 
   @CreateDateColumn({ type: "timestamp with time zone" })
-  date: Date;
+  creationDate: Date;
+
+  @UpdateDateColumn({ type: "time with time zone" })
+  modificationDate: Date;
 
   @Column({ type: "smallint" })
   age: number;
