@@ -19,6 +19,8 @@ const translateSuccessMessage = (successMessage: string): string => {
       return "Vous êtes maintenant connecté";
     case "log out successfully":
       return "Vous vous êtes déconnecté avec succès";
+    case "user updated":
+      return "Votre profil a été mis à jour";
     default:
       return "";
   }
