@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import AnimalPage from "../pages/AnimalPage";
 import ClientPage from "../pages/ClientPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -18,15 +19,23 @@ const Routes = () => {
           component={HomePage}
           isAuth={state.isAuth}
         />
-        <Route path="/login" component={LoginPage} />
+        <Route path="/login" exact component={LoginPage} />
         <PrivateRoute
           path="/client/:clientId"
+          exact
           component={ClientPage}
           isAuth={state.isAuth}
         />
         <PrivateRoute
           path="/profile"
+          exact
           component={ProfilePage}
+          isAuth={state.isAuth}
+        />
+        <PrivateRoute
+          path="/client/:clientId/animal/:animalId"
+          exact
+          component={AnimalPage}
           isAuth={state.isAuth}
         />
       </Switch>
