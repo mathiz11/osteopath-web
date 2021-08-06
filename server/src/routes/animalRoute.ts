@@ -52,7 +52,7 @@ router.post(
   isAuth,
   param("clientId").isInt(),
   body("name").notEmpty().isLength({ max: 100 }),
-  body("type").notEmpty().isIn(Object.values(AnimalType)),
+  body("type").isIn(Object.values(AnimalType)),
   body("subtype").custom((subtype, { req }) =>
     req.body.type === AnimalType.NAC
       ? Object.values(AnimalSubtype).includes(subtype)
@@ -102,7 +102,7 @@ router.put(
   param("clientId").isInt(),
   body("id").isInt(),
   body("name").notEmpty().isLength({ max: 100 }),
-  body("type").notEmpty().isIn(Object.values(AnimalType)),
+  body("type").isIn(Object.values(AnimalType)),
   body("subtype").custom((subtype, { req }) =>
     req.body.type === AnimalType.NAC
       ? Object.values(AnimalSubtype).includes(subtype)
