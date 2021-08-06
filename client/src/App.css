@@ -110,12 +110,14 @@ button.circle.pure:hover {
   padding: 0 1rem 0 1.5rem;
 }
 
-.header.action-button button {
+.header.action-button button,
+.header.action-button a {
   display: flex;
   align-items: center;
 }
 
-.header.action-button button span {
+.header.action-button button span,
+.header.action-button a span {
   margin-left: 0.5rem;
 }
 
