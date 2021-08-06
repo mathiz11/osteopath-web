@@ -9,6 +9,27 @@ const checkAnimalValues = (animal: AnimalValues) => {
   return animal;
 };
 
+const getOne = async (
+  clientId: number,
+  animalId: number
+): Promise<Response> => {
+  return fetchManager({
+    url:
+      process.env.REACT_APP_API_URL +
+      "/clients/" +
+      clientId +
+      "/animals/" +
+      animalId,
+    options: {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  });
+};
+
 const create = async (
   clientId: number,
   animal: AnimalValues
@@ -65,6 +86,7 @@ const remove = async (
 };
 
 const animalService = {
+  getOne,
   create,
   edit,
   remove,
