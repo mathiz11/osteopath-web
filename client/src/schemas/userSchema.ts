@@ -1,6 +1,8 @@
 import * as Yup from "yup";
+import { User } from "../entities/User";
 
 export type UserValues = {
+  id?: number;
   firstname: string;
   lastname: string;
   email: string;
@@ -8,6 +10,13 @@ export type UserValues = {
   phone: string;
   address: string;
 };
+
+export const toUserValues = (user: User): UserValues => ({
+  ...user,
+  numberOA: user.numberOA ? user.numberOA : "",
+  phone: user.phone ? user.phone : "",
+  address: user.address ? user.address : "",
+});
 
 export const UserSchema = Yup.object().shape({
   firstname: Yup.string()
@@ -20,11 +29,9 @@ export const UserSchema = Yup.object().shape({
     .email("L'email n'est pas au bon format")
     .max(100, "L'email est trop long")
     .required("Ce champ est obligatoire"),
-  numberOA: Yup.string()
-    .max(30, "Le numéro OA est trop long")
-    .required("Ce champ est obligatoire"),
+  numberOA: Yup.string().max(30, "Le numéro OA est trop long").nullable(),
   phone: Yup.string()
     .matches(/^[0-9]{10}$/, "Le numéro de téléphone est invalide")
-    .required("Ce champ est obligatoire"),
-  address: Yup.string().required("Ce champ est obligatoire"),
+    .nullable(),
+  address: Yup.string().nullable(),
 });
