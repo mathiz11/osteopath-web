@@ -34,7 +34,7 @@ const ClientPage = ({ match }: any) => {
   const [animalformValues, setAnimalFormValues] = React.useState<AnimalValues>(
     DEFAULT_ANIMAL_VALUES
   );
-  const history = useHistory();
+  let history = useHistory();
 
   React.useEffect(() => {
     getClient();
