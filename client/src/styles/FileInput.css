@@ -1,0 +1,49 @@
+.form-control .file {
+  display: flex;
+  align-items: center;
+}
+.form-control .file label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  margin-bottom: unset;
+  transition: opacity 0.2s ease-out;
+}
+
+.form-control .file label:hover {
+  opacity: 0.8;
+}
+
+.form-control .file label svg {
+  margin-right: 0.5rem;
+}
+
+.form-control .file-input {
+  display: none;
+}
+
+.form-control .file-name {
+  margin-left: 1rem;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #6564db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1.5s linear infinite;
+  margin-right: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
