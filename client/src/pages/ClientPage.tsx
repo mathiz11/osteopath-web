@@ -1,40 +1,38 @@
 import React from "react";
-import clientService from "../services/clientService";
-import { Client } from "../entities/Client";
-import Layout from "../components/Layout";
+import {
+  BsFillEnvelopeFill,
+  BsGeo,
+  BsPencilSquare,
+  BsPhone,
+  BsTrash,
+} from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
-import { BsFillEnvelopeFill, BsGeo, BsPhone } from "react-icons/bs";
-import { HiDotsVertical } from "react-icons/hi";
-import "../styles/ClientPage.css";
-import AnimalList from "../components/AnimalList";
-import ClientModal from "../components/ClientModal";
-import { ClientValues, DEFAULT_CLIENT_VALUES } from "../schemas/clientSchema";
-import ActionsMenu, {
-  ActionsMenuValues,
-  DEFAULT_ACTIONS_MENU_VALUES,
-} from "../components/ActionsMenu";
-import ClientAlert from "../components/ClientAlert";
 import { useHistory } from "react-router-dom";
-import AnimalModal from "../components/AnimalModal";
-import { AnimalValues, DEFAULT_ANIMAL_VALUES } from "../schemas/animalSchema";
 import AnimalAlert from "../components/AnimalAlert";
-import animalService from "../services/animalService";
+import AnimalList from "../components/AnimalList";
+import AnimalModal from "../components/AnimalModal";
+import ClientAlert from "../components/ClientAlert";
+import ClientModal from "../components/ClientModal";
+import Layout from "../components/Layout";
 import { Animal } from "../entities/Animal";
+import { Client } from "../entities/Client";
+import { AnimalValues, DEFAULT_ANIMAL_VALUES } from "../schemas/animalSchema";
+import { ClientValues, DEFAULT_CLIENT_VALUES } from "../schemas/clientSchema";
+import animalService from "../services/animalService";
+import clientService from "../services/clientService";
+import "../styles/ClientPage.css";
 
 const ClientPage = ({ match }: any) => {
   const [client, setClient] = React.useState<Client | undefined>();
   const [showClientModal, setShowClientModal] = React.useState<boolean>(false);
   const [showAnimalModal, setShowAnimalModal] = React.useState<boolean>(false);
-  const [clientAlert, setClientAlert] = React.useState<number | undefined>();
+  const [showClientAlert, setShowClientAlert] = React.useState<boolean>(false);
   const [animalAlert, setAnimalAlert] = React.useState<number | undefined>();
   const [clientformValues, setClientFormValues] = React.useState<ClientValues>(
     DEFAULT_CLIENT_VALUES
   );
   const [animalformValues, setAnimalFormValues] = React.useState<AnimalValues>(
     DEFAULT_ANIMAL_VALUES
-  );
-  const [actionsMenu, setActionsMenu] = React.useState<ActionsMenuValues>(
-    DEFAULT_ACTIONS_MENU_VALUES
   );
   const history = useHistory();
 
@@ -51,8 +49,8 @@ const ClientPage = ({ match }: any) => {
   };
 
   const deleteClient = async () => {
-    if (clientAlert) {
-      const response = await clientService.remove(clientAlert);
+    if (client) {
+      const response = await clientService.remove(client.id);
 
       if (response.ok) {
         closeClientAlert();
@@ -99,39 +97,18 @@ const ClientPage = ({ match }: any) => {
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    setActionsMenu({
-      x:
-        e.nativeEvent.x + 150 > window.innerWidth
-          ? e.nativeEvent.pageX - 150
-          : e.nativeEvent.pageX,
-      y:
-        e.nativeEvent.y + 130 > window.innerHeight
-          ? e.nativeEvent.pageY - 130
-          : e.nativeEvent.pageY,
-      id: client?.id,
-    });
-  };
-
-  const closeActionsMenu = () => setActionsMenu(DEFAULT_ACTIONS_MENU_VALUES);
-
-  const openClientModalToEdit = (clientId: number | undefined) => {
-    if (clientId) {
-      setClientFormValues(client as ClientValues);
-      setShowClientModal(true);
-    }
+  const openClientModalToEdit = () => {
+    setClientFormValues(client as ClientValues);
+    setShowClientModal(true);
   };
 
   const closeClientModal = () => setShowClientModal(false);
 
-  const openClientAlertToDelete = (clientId: number | undefined) => {
-    if (clientId) {
-      setClientAlert(clientId);
-    }
+  const openClientAlertToDelete = () => {
+    setShowClientAlert(true);
   };
 
-  const closeClientAlert = () => setClientAlert(undefined);
+  const closeClientAlert = () => setShowClientAlert(false);
 
   const openAnimalModalToCreate = () => {
     if (animalformValues.id) {
@@ -172,10 +149,7 @@ const ClientPage = ({ match }: any) => {
           {client && (
             <>
               <div className="client-info">
-                <div className="client-info-name">
-                  <span>{client.firstname}</span>
-                  <span>{client.lastname}</span>
-                </div>
+                <h1>{client.firstname + " " + client.lastname}</h1>
                 <div className="client-info-detail">
                   <div className="client-info-detail-item">
                     <BsFillEnvelopeFill />
@@ -190,9 +164,12 @@ const ClientPage = ({ match }: any) => {
                     <span>{client.address}</span>
                   </div>
                 </div>
-                <div className="client-info-button">
-                  <button className="circle pure" onClick={handleClick}>
-                    <HiDotsVertical size="18" />
+                <div className="actions">
+                  <button className="circle" onClick={openClientModalToEdit}>
+                    <BsPencilSquare />
+                  </button>
+                  <button className="circle" onClick={openClientAlertToDelete}>
+                    <BsTrash />
                   </button>
                 </div>
               </div>
@@ -208,18 +185,12 @@ const ClientPage = ({ match }: any) => {
                 animals={client.animals}
                 editEvent={openAnimalModalToEdit}
                 deleteEvent={openAnimalAlertToDelete}
+                clientId={client.id}
               />
             </>
           )}
-          <ActionsMenu
-            isVisible={actionsMenu.id !== undefined}
-            close={closeActionsMenu}
-            editEvent={openClientModalToEdit}
-            deleteEvent={openClientAlertToDelete}
-            values={actionsMenu}
-          />
           <ClientAlert
-            isVisible={clientAlert !== undefined}
+            isVisible={showClientAlert}
             client={client}
             closeEvent={closeClientAlert}
             confirmEvent={deleteClient}
