@@ -3,16 +3,18 @@ import { useEffect, useState } from "react";
 import { BsPencilSquare, BsX } from "react-icons/bs";
 import Input from "../components/Input";
 import Layout from "../components/Layout";
-import Message from "../components/Message";
+import Message, { MessageType } from "../components/Message";
+import { ActionType, useStore } from "../components/Store";
 import { User } from "../entities/User";
-import { LoginSchema } from "../schemas/loginSchema";
-import { UserValues } from "../schemas/userSchema";
+import { toUserValues, UserSchema, UserValues } from "../schemas/userSchema";
 import userService from "../services/userService";
 import "../styles/ProfilePage.css";
+import { translateMessage } from "../utils/responseMessage";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | undefined>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [, dispatch] = useStore();
 
   const getUser = async () => {
     const response = await userService.get();
@@ -26,8 +28,20 @@ const ProfilePage = () => {
     getUser();
   }, []);
 
-  const submitForm = (values: UserValues) => {
+  const submitForm = async (values: UserValues) => {
     console.log(values);
+    const response = await userService.edit(values);
+    const jsonResponse = await response.json();
+
+    dispatch({
+      type: ActionType.SET_MESSAGE,
+      payload: {
+        type: response.ok ? MessageType.SUCCESS : MessageType.ERROR,
+        text: translateMessage(jsonResponse.message, response.ok),
+      },
+    });
+
+    if (response.ok) setIsEditing(false);
   };
 
   return (
@@ -55,10 +69,10 @@ const ProfilePage = () => {
           </div>
           {user && (
             <Formik
-              initialValues={user as UserValues}
+              initialValues={toUserValues(user)}
               validateOnBlur={false}
               validateOnChange={false}
-              validationSchema={LoginSchema}
+              validationSchema={UserSchema}
               onSubmit={submitForm}
             >
               {({ values, handleChange, handleSubmit, errors }) => (
