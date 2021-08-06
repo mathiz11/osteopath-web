@@ -1,3 +1,5 @@
+import { Card } from "./Card";
+
 export enum AnimalType {
   HORSE = "Cheval",
   COW = "Vache",
@@ -24,6 +26,5 @@ export type Animal = {
   subtype: string | null;
   sex: string;
   breed: string;
-  clientId?: number;
-  // cards: Card[];
+  cards: Card[];
 };
