@@ -29,7 +29,6 @@ const ProfilePage = () => {
   }, []);
 
   const submitForm = async (values: UserValues) => {
-    console.log(values);
     const response = await userService.edit(values);
     const jsonResponse = await response.json();
 
