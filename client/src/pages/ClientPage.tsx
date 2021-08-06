@@ -145,10 +145,10 @@ const ClientPage = ({ match }: any) => {
   return (
     <Layout>
       <div className="client">
-        <div className="container">
-          {client && (
-            <>
-              <div className="client-info">
+        {client && (
+          <>
+            <div className="client-info">
+              <div className="container">
                 <h1>{client.firstname + " " + client.lastname}</h1>
                 <div className="client-info-detail">
                   <div className="client-info-detail-item">
@@ -173,7 +173,8 @@ const ClientPage = ({ match }: any) => {
                   </button>
                 </div>
               </div>
-
+            </div>
+            <div className="container">
               <div className="header action-button">
                 <h2>Animaux</h2>
                 <button className="primary" onClick={openAnimalModalToCreate}>
@@ -187,38 +188,37 @@ const ClientPage = ({ match }: any) => {
                 deleteEvent={openAnimalAlertToDelete}
                 clientId={client.id}
               />
-            </>
-          )}
-          <ClientAlert
-            isVisible={showClientAlert}
-            client={client}
-            closeEvent={closeClientAlert}
-            confirmEvent={deleteClient}
-          />
-          <ClientModal
-            isVisible={showClientModal}
-            close={closeClientModal}
-            formValues={clientformValues}
-            refreshView={updateClient}
-          />
-          <AnimalAlert
-            isVisible={animalAlert !== undefined}
-            animalName={
-              client?.animals
-                .filter((animal) => animal.id === animalAlert)
-                .pop()?.name
-            }
-            closeEvent={closeAnimalAlert}
-            confirmEvent={deleteAnimal}
-          />
-          <AnimalModal
-            isVisible={showAnimalModal}
-            close={closeAnimalModal}
-            formValues={animalformValues}
-            refreshView={updateAnimal}
-            clientId={client?.id}
-          />
-        </div>
+            </div>
+          </>
+        )}
+        <ClientAlert
+          isVisible={showClientAlert}
+          client={client}
+          closeEvent={closeClientAlert}
+          confirmEvent={deleteClient}
+        />
+        <ClientModal
+          isVisible={showClientModal}
+          close={closeClientModal}
+          formValues={clientformValues}
+          refreshView={updateClient}
+        />
+        <AnimalAlert
+          isVisible={animalAlert !== undefined}
+          animalName={
+            client?.animals.filter((animal) => animal.id === animalAlert).pop()
+              ?.name
+          }
+          closeEvent={closeAnimalAlert}
+          confirmEvent={deleteAnimal}
+        />
+        <AnimalModal
+          isVisible={showAnimalModal}
+          close={closeAnimalModal}
+          formValues={animalformValues}
+          refreshView={updateAnimal}
+          clientId={client?.id}
+        />
       </div>
     </Layout>
   );
