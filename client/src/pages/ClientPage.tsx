@@ -122,10 +122,6 @@ const ClientPage = ({ match }: any) => {
       setAnimalFormValues(
         client.animals
           .filter((animal) => animal.id === animalId)
-          .map((animal) => {
-            delete animal.clientId;
-            return animal;
-          })
           .pop() as AnimalValues
       );
       setShowAnimalModal(true);
