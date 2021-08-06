@@ -1,0 +1,22 @@
+export type Card = {
+  id: string;
+  creationDate: Date;
+  modificationDate: Date;
+  age: number;
+  isCastrated: boolean;
+  diet: string;
+  score: number;
+  discipline: string;
+  lifestyle: string;
+  antecedent: string;
+  dewormer: string;
+  vaccine: string;
+  marshal: string;
+  dentistry: string;
+  observation: string;
+  schema: File;
+  conclusion: string;
+  treatment: string;
+  restTime: string;
+  activityRetake: string;
+};
