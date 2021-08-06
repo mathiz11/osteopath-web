@@ -24,7 +24,7 @@ const ClientList: React.FC<ClientsProps> = ({
     DEFAULT_ACTIONS_MENU_VALUES
   );
 
-  const history = useHistory();
+  let history = useHistory();
 
   const closeActionsMenu = () => setActionsMenu(DEFAULT_ACTIONS_MENU_VALUES);
 
