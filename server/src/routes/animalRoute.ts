@@ -5,7 +5,7 @@ import { checkErrors } from "../middlewares/checkErrors";
 import { isAuth } from "../middlewares/isAuth";
 import { getConnection } from "typeorm";
 import { Client } from "../entities/Client";
-import animalService from "src/services/animalService";
+import animalService from "../services/animalService";
 
 const router = express.Router();
 
