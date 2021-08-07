@@ -6,6 +6,7 @@ import authRouter from "./routes/authRoute";
 import clientRouter from "./routes/clientRoute";
 import animalRouter from "./routes/animalRoute";
 import userRouter from "./routes/userRoute";
+import fileRouter from "./routes/fileRoute";
 require("dotenv").config();
 
 (async () => {
@@ -30,6 +31,7 @@ require("dotenv").config();
   app.use("/clients", clientRouter);
   app.use("/", animalRouter);
   app.use("/users", userRouter);
+  app.use("/files", fileRouter);
 
   // const user = new User();
   // user.firstname = "Mathis";
