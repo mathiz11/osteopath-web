@@ -5,6 +5,7 @@ import { checkErrors } from "../middlewares/checkErrors";
 import { isAuth } from "../middlewares/isAuth";
 import { getConnection } from "typeorm";
 import { Client } from "../entities/Client";
+import { createBucket, deleteBucket } from "../utils/cloudStorage";
 
 const router = express.Router();
 
@@ -86,7 +87,12 @@ router.post(
             clientId,
           });
 
-        res.status(201).json({ animal: result.identifiers.pop() });
+        const newAnimal = result.identifiers.pop();
+
+        if (newAnimal) {
+          await createBucket("animal-" + newAnimal.id);
+          res.status(201).json({ animal: newAnimal });
+        }
       } else {
         res.status(404).json({ message: "client not found" });
       }
@@ -156,6 +162,8 @@ router.delete(
     try {
       if (await animalService.getOne(animalId, clientId, req.user.id)) {
         await getConnection().getRepository(Animal).delete({ id: animalId });
+
+        await deleteBucket("animal-" + animalId);
 
         res.json({ message: "animal deleted" });
       } else {
