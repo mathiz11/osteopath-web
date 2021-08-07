@@ -29,7 +29,11 @@
   margin-left: 1rem;
 }
 
-.loader {
+.form-control .file button.circle {
+  margin-left: 1rem;
+}
+
+/* .loader {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #6564db;
   border-radius: 50%;
@@ -46,4 +50,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
