@@ -1,12 +1,30 @@
-import React, { ChangeEvent, useState } from "react";
-import { BsPlus } from "react-icons/bs";
+import { ChangeEvent, useRef } from "react";
+import { BsPlus, BsTrash } from "react-icons/bs";
 import "../styles/FileInput.css";
 
-const FileInput = () => {
-  const [file, setFile] = useState<File | null | undefined>();
+type FileInputProps = {
+  id: string;
+  file: File | null;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
+};
+
+const FileInput = ({ id, file, setFieldValue }: FileInputProps) => {
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files?.item(0));
+    const file = e.target.files?.item(0);
+    if (file) setFieldValue(id, file);
+  };
+
+  const removeFile = () => {
+    if (ref.current?.value) {
+      ref.current.value = "";
+    }
+    setFieldValue(id, null);
   };
 
   return (
@@ -17,6 +35,7 @@ const FileInput = () => {
           <span>Ajouter un fichier</span>
         </label>
         <input
+          ref={ref}
           type="file"
           id="file-input"
           className={"file-input"}
@@ -24,6 +43,11 @@ const FileInput = () => {
           onChange={handleChange}
         />
         <span className="file-name">{file?.name}</span>
+        {file && (
+          <button className="circle" onClick={removeFile}>
+            <BsTrash />
+          </button>
+        )}
       </div>
     </div>
   );
