@@ -5,24 +5,9 @@ import { checkErrors } from "../middlewares/checkErrors";
 import { isAuth } from "../middlewares/isAuth";
 import { getConnection } from "typeorm";
 import { Client } from "../entities/Client";
+import animalService from "src/services/animalService";
 
 const router = express.Router();
-
-export const animalService = {
-  getOne: async (animalId: string, clientId: string, userId: string) => {
-    return await getConnection()
-      .getRepository(Animal)
-      .findOne(animalId, {
-        where: {
-          client: {
-            id: clientId,
-            userId,
-          },
-        },
-        relations: ["cards"],
-      });
-  },
-};
 
 router.get(
   "/clients/:clientId/animals/:animalId",
