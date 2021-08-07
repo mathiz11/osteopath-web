@@ -92,7 +92,7 @@ const AnimalPage = () => {
                 <Link
                   to={{
                     pathname: `/client/${clientId}/animal/${animalId}/card/edit`,
-                    state: { formValues: cardFormValues },
+                    state: { formValues: cardFormValues, clientId, animalId },
                   }}
                   className="primary"
                 >
