@@ -7,6 +7,7 @@ import clientRouter from "./routes/clientRoute";
 import animalRouter from "./routes/animalRoute";
 import userRouter from "./routes/userRoute";
 import fileRouter from "./routes/fileRoute";
+import cardRouter from "./routes/cardRoute";
 require("dotenv").config();
 
 (async () => {
@@ -31,6 +32,7 @@ require("dotenv").config();
   app.use("/clients", clientRouter);
   app.use("/", animalRouter);
   app.use("/users", userRouter);
+  app.use("/", cardRouter);
   app.use("/files", fileRouter);
 
   // const user = new User();
@@ -40,29 +42,4 @@ require("dotenv").config();
   // user.password =
   //   "$2b$11$wJetP39fIDiWByBL8G0gUegSnzkqOKitmQg0sXSSyfLRSMmcDz/eG";
   // await user.save();
-
-  // const client = new Client();
-  // client.firstname = "Catherine";
-  // client.lastname = "Enjolras";
-  // client.email = "catherine@gmail.com";
-  // client.phone = "0606060606";
-  // client.address = "44 rue du faubourg du Nord\n34130 MAUGUIO";
-  // let mathis = await User.findOne({ where: { firstname: "Mathis" } });
-  // if (mathis) {
-  //   client.user = mathis;
-  // }
-  // await getConnection().getRepository(Client).save(client);
-
-  // const hindy = new Animal();
-  // hindy.name = "Hindy";
-  // hindy.type = AnimalType.DOG;
-  // hindy.sex = "Femelle";
-  // hindy.breed = "Bichon maltais";
-  // const catherine = await getConnection()
-  //   .getRepository(Client)
-  //   .findOne({ where: { firstname: "Catherine" } });
-  // if (catherine) {
-  //   hindy.owner = catherine;
-  // }
-  // await getConnection().getRepository(Animal).save(hindy);
 })();
