@@ -102,7 +102,9 @@ const Input = ({
           )}
         </div>
       )}
-      {isFile && <FileInput />}
+      {isFile && setFieldValue && (
+        <FileInput id={id} file={value} setFieldValue={setFieldValue} />
+      )}
       {!isTextArea && !select && !isSwitch && !isNote && !isFile && (
         <input
           id={id}
