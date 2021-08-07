@@ -2,14 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Animal } from "./Animal";
-import { File } from "./File";
 
 @Entity()
 export class Card {
@@ -58,9 +55,8 @@ export class Card {
   @Column({ type: "text", nullable: true })
   observation: string;
 
-  @OneToOne(() => File)
-  @JoinColumn()
-  schema: File;
+  @Column({ nullable: true })
+  schemaURL: string;
 
   @Column({ type: "text", nullable: true })
   conclusion: string;
