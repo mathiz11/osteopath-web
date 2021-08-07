@@ -4,7 +4,7 @@ import { Card } from "../entities/Card";
 import { checkErrors } from "../middlewares/checkErrors";
 import { isAuth } from "../middlewares/isAuth";
 import { getConnection } from "typeorm";
-import { animalService } from "./animalRoute";
+import animalService from "../services/animalService";
 
 const router = express.Router();
 
