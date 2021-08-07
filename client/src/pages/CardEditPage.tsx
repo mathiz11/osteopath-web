@@ -1,21 +1,56 @@
 import { Formik } from "formik";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Input from "../components/Input";
 import Layout from "../components/Layout";
-import Message from "../components/Message";
-import { CardValues } from "../schemas/cardSchema";
-import { LoginSchema } from "../schemas/loginSchema";
+import Message, { MessageType } from "../components/Message";
+import { ActionType, useStore } from "../components/Store";
+import { CardSchema, CardValues } from "../schemas/cardSchema";
+import cardService from "../services/cardService";
 import "../styles/CardEditPage.css";
+import { translateMessage } from "../utils/responseMessage";
 
 type LocationState = {
   formValues: CardValues;
+  clientId: string;
+  animalId: string;
 };
 
 const CardEditPage = () => {
-  let location = useLocation<LocationState>();
+  const [, dispatch] = useStore();
+  let history = useHistory<LocationState>();
 
   const submitForm = async (values: CardValues) => {
-    console.log(values);
+    let formData;
+
+    if (values.schema) {
+      formData = new FormData();
+      formData.append("file", values.schema as Blob);
+    }
+
+    const response = await cardService.create(
+      history.location.state.clientId,
+      history.location.state.animalId,
+      values,
+      formData
+    );
+
+    if (response.ok) {
+      history.push(
+        "/client/" +
+          history.location.state.clientId +
+          "/animal/" +
+          history.location.state.animalId
+      );
+    } else {
+      const jsonResponse = await response.json();
+      dispatch({
+        type: ActionType.SET_MESSAGE,
+        payload: {
+          type: MessageType.ERROR,
+          text: translateMessage(jsonResponse.message, response.ok),
+        },
+      });
+    }
   };
 
   return (
@@ -24,10 +59,10 @@ const CardEditPage = () => {
         <div className="container">
           <h1>Ajouter une fiche</h1>
           <Formik
-            initialValues={location.state.formValues}
+            initialValues={history.location.state.formValues}
             validateOnBlur={false}
             validateOnChange={false}
-            validationSchema={LoginSchema}
+            validationSchema={CardSchema}
             onSubmit={submitForm}
           >
             {({
@@ -46,6 +81,7 @@ const CardEditPage = () => {
                   onChange={handleChange}
                   value={values.age}
                   error={errors.age}
+                  isRequired
                 />
                 <Input
                   id="isCastrated"
@@ -54,14 +90,15 @@ const CardEditPage = () => {
                   value={values.isCastrated}
                   error={errors.isCastrated}
                   isSwitch
+                  isRequired
                 />
                 <Input
                   id="diet"
                   label="Régime"
-                  type="text"
                   onChange={handleChange}
                   value={values.diet}
                   error={errors.diet}
+                  isTextArea
                 />
                 <Input
                   id="score"
@@ -70,30 +107,31 @@ const CardEditPage = () => {
                   value={values.score}
                   error={errors.score}
                   isNote
+                  isRequired
                 />
                 <Input
                   id="discipline"
                   label="Discipline"
-                  type="text"
                   onChange={handleChange}
                   value={values.discipline}
                   error={errors.discipline}
+                  isTextArea
                 />
                 <Input
                   id="lifestyle"
                   label="Mode de vie"
-                  type="text"
                   onChange={handleChange}
                   value={values.lifestyle}
                   error={errors.lifestyle}
+                  isTextArea
                 />
                 <Input
                   id="antecedent"
                   label="Antécédent"
-                  type="text"
                   onChange={handleChange}
                   value={values.antecedent}
                   error={errors.antecedent}
+                  isTextArea
                 />
                 <Input
                   id="dewormer"
@@ -106,42 +144,74 @@ const CardEditPage = () => {
                 <Input
                   id="vaccine"
                   label="Vaccin"
-                  type="text"
                   onChange={handleChange}
                   value={values.vaccine}
                   error={errors.vaccine}
+                  isTextArea
                 />
                 <Input
                   id="marshal"
                   label="Maréchal"
-                  type="text"
                   onChange={handleChange}
                   value={values.marshal}
                   error={errors.marshal}
+                  isTextArea
                 />
                 <Input
                   id="dentistry"
                   label="Dentisterie"
-                  type="text"
                   onChange={handleChange}
                   value={values.dentistry}
                   error={errors.dentistry}
+                  isTextArea
                 />
                 <Input
                   id="observation"
                   label="Observation"
-                  type="text"
                   onChange={handleChange}
                   value={values.observation}
                   error={errors.observation}
+                  isTextArea
                 />
                 <Input
                   id="schema"
                   label="Schéma"
-                  onChange={handleChange}
-                  value={values.observation}
-                  error={errors.observation}
+                  setFieldValue={setFieldValue}
+                  value={values.schema}
+                  error={errors.schema}
                   isFile
+                />
+                <Input
+                  id="conclusion"
+                  label="Conclusion"
+                  onChange={handleChange}
+                  value={values.conclusion}
+                  error={errors.conclusion}
+                  isTextArea
+                />
+                <Input
+                  id="treatment"
+                  label="Traitement"
+                  onChange={handleChange}
+                  value={values.treatment}
+                  error={errors.treatment}
+                  isTextArea
+                />
+                <Input
+                  id="restTime"
+                  label="Temps de repos"
+                  type="text"
+                  onChange={handleChange}
+                  value={values.restTime}
+                  error={errors.restTime}
+                />
+                <Input
+                  id="activityRetake"
+                  label="Reprise d'activité"
+                  type="text"
+                  onChange={handleChange}
+                  value={values.activityRetake}
+                  error={errors.activityRetake}
                 />
                 <div className="center">
                   <button type="submit" className="primary">
