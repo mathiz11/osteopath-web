@@ -14,7 +14,8 @@ export type CardValues = {
   marshal: string;
   dentistry: string;
   observation: string;
-  schema: File | null;
+  schema?: File | null;
+  schemaFilename?: string;
   conclusion: string;
   treatment: string;
   restTime: string;
