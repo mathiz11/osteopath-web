@@ -1,7 +1,7 @@
 import express from "express";
 import { unlinkSync } from "fs";
 import multer from "multer";
-import { createFileFromBucket } from "../utils/cloudStorage";
+import { uploadFile } from "../utils/cloudStorage";
 import { checkErrors } from "../middlewares/checkErrors";
 import { isAuth } from "../middlewares/isAuth";
 
@@ -28,7 +28,7 @@ router.post(
   upload.single("file"),
   async (req, res) => {
     if (req.file) {
-      const createdFilename = await createFileFromBucket(req.file);
+      const createdFilename = await uploadFile(req.file);
       unlinkSync(process.cwd() + "/uploads/" + req.file.filename);
       res.send({ message: "file uploaded", filename: createdFilename });
     } else {

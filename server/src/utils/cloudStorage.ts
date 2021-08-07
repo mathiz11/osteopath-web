@@ -3,21 +3,19 @@ import path from "path";
 
 const storage = new Storage({
   keyFilename: path.join(__dirname, "../config/service-account-file.json"),
-  projectId: process.env.GOOGLE_CLOUD_STORAGE_PROJECT_ID,
+  projectId: process.env.GOOGLE_CLOUD_STORAGE_PROJECT_ID!,
 });
 
-export const createBucket = async (bucketId: string) => {
+export const uploadFile = async (
+  file: Express.Multer.File
+): Promise<string | void> => {
   try {
-    await storage.createBucket(bucketId);
-  } catch (e) {
-    throw new Error("error on create bucket");
-  }
-};
+    const response = await storage
+      .bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKED_ID!)
+      .upload(file.path);
 
-export const deleteBucket = async (bucketId: string) => {
-  try {
-    await storage.bucket(bucketId).delete();
-  } catch (e) {
-    throw new Error("error on delete bucket");
+    return response[0].name;
+  } catch (error) {
+    console.log("cloud storage error", error);
   }
 };
