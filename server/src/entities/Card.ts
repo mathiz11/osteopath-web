@@ -16,7 +16,7 @@ export class Card {
   @CreateDateColumn({ type: "timestamp with time zone" })
   creationDate: Date;
 
-  @UpdateDateColumn({ type: "time with time zone" })
+  @UpdateDateColumn({ type: "timestamp with time zone" })
   modificationDate: Date;
 
   @Column({ type: "smallint" })
@@ -56,7 +56,7 @@ export class Card {
   observation: string;
 
   @Column({ nullable: true })
-  schemaURL: string;
+  schemaFilename: string;
 
   @Column({ type: "text", nullable: true })
   conclusion: string;
@@ -69,6 +69,9 @@ export class Card {
 
   @Column({ length: 100, nullable: true })
   activityRetake: string;
+
+  @Column()
+  animalId: string;
 
   @ManyToOne(() => Animal, (animal) => animal.cards, { onDelete: "CASCADE" })
   animal: Animal;
