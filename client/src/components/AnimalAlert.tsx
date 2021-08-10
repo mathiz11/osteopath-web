@@ -3,8 +3,8 @@ import Alert from "./Alert";
 type AnimalAlertProps = {
   isVisible: boolean;
   animalName: string | undefined;
-  closeEvent: () => any;
-  confirmEvent: () => any;
+  closeEvent: () => void;
+  confirmEvent: () => void;
 };
 
 const AnimalAlert = ({
