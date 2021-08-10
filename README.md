@@ -42,4 +42,24 @@ Se rendre dans le dossier `/client` et lancer :
 yarn start
 ```
 
+## Docker
+
+Se rendre dans le dossier `/docker` et lancer :
+
+```bash
+docker-compose up -d
+```
+
+Pour accéder au conteneur :
+
+```bash
+docker exec -it <dockerId> bash
+```
+
+Pour se connecter à Postgres :
+
+```bash
+psql -U postgres
+```
+
 > Mathis ENJOLRAS - 2021
