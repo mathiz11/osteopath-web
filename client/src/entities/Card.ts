@@ -1,7 +1,7 @@
 export type Card = {
-  id: string;
-  creationDate: Date;
-  modificationDate: Date;
+  id: number;
+  creationDate: string;
+  modificationDate: string;
   age: number;
   isCastrated: boolean;
   diet: string;
