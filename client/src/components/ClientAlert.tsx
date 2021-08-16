@@ -4,8 +4,8 @@ import Alert from "./Alert";
 type ClientAlertProps = {
   isVisible: boolean;
   client: Client | undefined;
-  closeEvent: () => any;
-  confirmEvent: () => any;
+  closeEvent: () => void;
+  confirmEvent: () => void;
 };
 
 const ClientAlert = ({
