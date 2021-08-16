@@ -1,4 +1,3 @@
-import { Card } from "../entities/Card";
 import { CardValues } from "../schemas/cardSchema";
 import { fetchManager } from "./globalService";
 
