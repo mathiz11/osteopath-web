@@ -1,23 +1,40 @@
 import { Formik } from "formik";
-import { useHistory, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import Input from "../components/Input";
 import Layout from "../components/Layout";
 import Message, { MessageType } from "../components/Message";
 import { ActionType, useStore } from "../components/Store";
-import { CardSchema, CardValues } from "../schemas/cardSchema";
+import {
+  CardSchema,
+  CardValues,
+  DEFAULT_CARD_VALUES,
+} from "../schemas/cardSchema";
 import cardService from "../services/cardService";
 import "../styles/CardEditPage.css";
 import { translateMessage } from "../utils/responseMessage";
 
 type LocationState = {
-  formValues: CardValues;
+  formValues?: CardValues;
+};
+
+type ParamsType = {
   clientId: string;
   animalId: string;
+  cardId?: string;
 };
 
 const CardEditPage = () => {
+  const [formValues, setFormValues] = useState<CardValues>(DEFAULT_CARD_VALUES);
   const [, dispatch] = useStore();
   let history = useHistory<LocationState>();
+  let { clientId, animalId, cardId } = useParams<ParamsType>();
+
+  useEffect(() => {
+    if (cardId && history.location.state.formValues) {
+      setFormValues(history.location.state.formValues);
+    }
+  }, [cardId, history.location.state.formValues]);
 
   const submitForm = async (values: CardValues) => {
     let formData;
@@ -28,19 +45,14 @@ const CardEditPage = () => {
     }
 
     const response = await cardService.create(
-      history.location.state.clientId,
-      history.location.state.animalId,
+      clientId,
+      animalId,
       values,
       formData
     );
 
     if (response.ok) {
-      history.push(
-        "/client/" +
-          history.location.state.clientId +
-          "/animal/" +
-          history.location.state.animalId
-      );
+      history.push(`/client/${clientId}/animal/${animalId}`);
     } else {
       const jsonResponse = await response.json();
       dispatch({
@@ -59,7 +71,7 @@ const CardEditPage = () => {
         <div className="container">
           <h1>Ajouter une fiche</h1>
           <Formik
-            initialValues={history.location.state.formValues}
+            initialValues={formValues}
             validateOnBlur={false}
             validateOnChange={false}
             validationSchema={CardSchema}
