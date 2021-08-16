@@ -7,5 +7,7 @@ services:
     environment:
       - POSTGRES_DB=osteopath
       - POSTGRES_PASSWORD=root
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
     ports:
       - "5432:5432"
