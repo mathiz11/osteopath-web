@@ -13,11 +13,11 @@ export class Card {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @CreateDateColumn({ type: "timestamp with time zone" })
-  creationDate: Date;
+  @CreateDateColumn({ type: "timestamptz" })
+  creationDate: string;
 
-  @UpdateDateColumn({ type: "timestamp with time zone" })
-  modificationDate: Date;
+  @UpdateDateColumn({ type: "timestamptz" })
+  modificationDate: string;
 
   @Column({ type: "smallint" })
   age: number;
