@@ -11,18 +11,21 @@ import { Animal } from "./Animal";
 @Entity()
 export class Card {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @CreateDateColumn({ type: "timestamptz" })
+  @CreateDateColumn({ name: "creation_date", type: "timestamptz" })
   creationDate: string;
 
-  @UpdateDateColumn({ type: "timestamptz" })
+  @UpdateDateColumn({ name: "modification_date", type: "timestamptz" })
   modificationDate: string;
+
+  @Column({ type: "integer" })
+  order: number;
 
   @Column({ type: "smallint" })
   age: number;
 
-  @Column()
+  @Column({ name: "is_castrated" })
   isCastrated: boolean;
 
   @Column({ type: "text", nullable: true })
@@ -55,7 +58,7 @@ export class Card {
   @Column({ type: "text", nullable: true })
   observation: string;
 
-  @Column({ nullable: true })
+  @Column({ name: "schema_filename", nullable: true })
   schemaFilename: string;
 
   @Column({ type: "text", nullable: true })
@@ -64,14 +67,14 @@ export class Card {
   @Column({ type: "text", nullable: true })
   treatment: string;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ name: "rest_time", length: 100, nullable: true })
   restTime: string;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ name: "activity_retake", length: 100, nullable: true })
   activityRetake: string;
 
-  @Column()
-  animalId: string;
+  @Column({ name: "animal_id" })
+  animalId: number;
 
   @ManyToOne(() => Animal, (animal) => animal.cards, { onDelete: "CASCADE" })
   animal: Animal;

@@ -65,14 +65,16 @@ router.post(
     const { firstname, lastname, email, phone, address } = req.body;
 
     try {
-      const result = await getConnection().getRepository(Client).insert({
-        firstname,
-        lastname,
-        email,
-        phone,
-        address,
-        userId: req.user.id,
-      });
+      const result = await getConnection()
+        .getRepository(Client)
+        .insert({
+          firstname,
+          lastname,
+          email,
+          phone,
+          address,
+          userId: +req.user.id,
+        });
 
       res.status(201).json({ client: result.identifiers.pop() });
     } catch (e) {
@@ -134,7 +136,9 @@ router.delete(
       ) {
         res.status(404).json({ message: "client not found" });
       } else {
-        await getConnection().getRepository(Client).delete({ id: clientId });
+        await getConnection()
+          .getRepository(Client)
+          .delete({ id: +clientId });
         res.json({ message: "client deleted" });
       }
     } catch (e) {

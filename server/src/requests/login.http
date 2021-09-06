@@ -1,0 +1,13 @@
+POST http://localhost:5000/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "mathis@gmail.com",
+    "password": "mathislpb"
+}
+
+###
+
+GET http://localhost:5000/clients/1/animals/1 HTTP/1.1
+content-type: application/json
+Cookie: access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI5MTExNDI2LCJleHAiOjE2MjkxMTI2MjZ9.tphsmVd8_QkF1Pufo3b64Sudzd5slj_6Fv0DqcsMOwY; Path=/; HttpOnly,refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidG9rZW5WZXJzaW9uIjowLCJpYXQiOjE2MjkxMTE0MjYsImV4cCI6MTYyOTcxNjIyNn0.L9ZDwEeu-rkJsd-IgDrTBguVO2tNtUkR4aqtM-m2M58; Path=/; HttpOnly

@@ -81,26 +81,28 @@ router.post(
       );
 
       if (animal) {
-        const result = await getConnection().getRepository(Card).insert({
-          age,
-          isCastrated,
-          diet,
-          score,
-          discipline,
-          lifestyle,
-          antecedent,
-          dewormer,
-          vaccine,
-          marshal,
-          dentistry,
-          observation,
-          schemaFilename,
-          conclusion,
-          treatment,
-          restTime,
-          activityRetake,
-          animalId,
-        });
+        const result = await getConnection()
+          .getRepository(Card)
+          .insert({
+            age,
+            isCastrated,
+            diet,
+            score,
+            discipline,
+            lifestyle,
+            antecedent,
+            dewormer,
+            vaccine,
+            marshal,
+            dentistry,
+            observation,
+            schemaFilename,
+            conclusion,
+            treatment,
+            restTime,
+            activityRetake,
+            animalId: +animalId,
+          });
 
         const newCard = result.identifiers.pop();
 

@@ -11,7 +11,7 @@ import { User } from "./User";
 @Entity()
 export class Client {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ length: 100 })
   firstname: string;
@@ -28,8 +28,8 @@ export class Client {
   @Column({ type: "text" })
   address: string;
 
-  @Column()
-  userId: string;
+  @Column({ name: "user_id" })
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.clients)
   user: User;

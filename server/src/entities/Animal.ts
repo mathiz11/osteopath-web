@@ -30,7 +30,7 @@ export enum AnimalSubtype {
 @Entity()
 export class Animal {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ length: 100 })
   name: string;
@@ -54,8 +54,8 @@ export class Animal {
   @Column({ length: 100 })
   breed: string;
 
-  @Column()
-  clientId: string;
+  @Column({ name: "client_id" })
+  clientId: number;
 
   @ManyToOne(() => Client, (client) => client.animals, { onDelete: "CASCADE" })
   client: Client;

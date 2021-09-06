@@ -68,7 +68,7 @@ router.post(
             subtype: type === AnimalType.NAC ? subtype : null,
             sex,
             breed,
-            clientId,
+            clientId: +clientId,
           });
 
         const newAnimal = result.identifiers.pop();
@@ -113,7 +113,7 @@ router.put(
             subtype,
             sex,
             breed,
-            clientId,
+            clientId: +clientId,
           })
           .where("id = :id and clientId = :clientId", {
             id,
@@ -142,7 +142,9 @@ router.delete(
 
     try {
       if (await animalService.getOne(animalId, clientId, req.user.id)) {
-        await getConnection().getRepository(Animal).delete({ id: animalId });
+        await getConnection()
+          .getRepository(Animal)
+          .delete({ id: +animalId });
 
         res.json({ message: "animal deleted" });
       } else {

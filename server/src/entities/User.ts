@@ -15,7 +15,7 @@ export type LighterUser = {
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ length: 100 })
   firstname: string;
@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column({ length: 100 })
   password: string;
 
-  @Column({ length: 30, nullable: true })
+  @Column({ name: "number_OA", length: 30, nullable: true })
   numberOA: string;
 
   @Column({ length: 10, nullable: true })
@@ -38,7 +38,7 @@ export class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   address: string;
 
-  @Column({ type: "int", default: 0 })
+  @Column({ name: "token_version", type: "int", default: 0 })
   tokenVersion: number;
 
   @OneToMany(() => Client, (client) => client.user)
