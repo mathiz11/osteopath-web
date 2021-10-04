@@ -34,7 +34,7 @@ const CardEditPage = () => {
     if (cardId && history.location.state.formValues) {
       setFormValues(history.location.state.formValues);
     }
-  }, [cardId, history.location.state.formValues]);
+  }, [cardId, history.location.state]);
 
   const submitForm = async (values: CardValues) => {
     let formData;

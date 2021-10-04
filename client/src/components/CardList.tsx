@@ -41,16 +41,11 @@ const CardList = ({ cards, editEvent, deleteEvent }: CardListProps) => {
 
   return (
     <div className="cards">
-      {cards.map((card, i) => {
-        const creationDate = moment(
-          card.creationDate.replace("Z", ""),
-          moment.ISO_8601
-        );
-        return (
+      {cards.map((card, i) => (
           <div key={"card" + card.id} className="cards-item">
             <span>{i + 1}</span>
-            <span>{creationDate.format("DD/MM/YY")}</span>
-            <span>{creationDate.format("kk:mm")}</span>
+            <span>{moment(card.creationDate).format("DD/MM/YY")}</span>
+            <span>{moment(card.creationDate).format("kk:mm")}</span>
             <button
               className="circle pure"
               onClick={(e) => handleClick(e, card.id)}
@@ -58,8 +53,7 @@ const CardList = ({ cards, editEvent, deleteEvent }: CardListProps) => {
               <HiDotsVertical size="18" />
             </button>
           </div>
-        );
-      })}
+        ))}
       <ActionsMenu
         isVisible={actionsMenu.id !== undefined}
         close={closeActionsMenu}

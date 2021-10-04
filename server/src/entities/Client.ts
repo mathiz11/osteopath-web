@@ -28,7 +28,7 @@ export class Client {
   @Column({ type: "text" })
   address: string;
 
-  @Column({ name: "user_id" })
+  @Column()
   userId: number;
 
   @ManyToOne(() => User, (user) => user.clients)

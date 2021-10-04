@@ -54,7 +54,7 @@ export class Animal {
   @Column({ length: 100 })
   breed: string;
 
-  @Column({ name: "client_id" })
+  @Column()
   clientId: number;
 
   @ManyToOne(() => Client, (client) => client.animals, { onDelete: "CASCADE" })

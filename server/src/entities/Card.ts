@@ -19,9 +19,6 @@ export class Card {
   @UpdateDateColumn({ name: "modification_date", type: "timestamptz" })
   modificationDate: string;
 
-  @Column({ type: "integer" })
-  order: number;
-
   @Column({ type: "smallint" })
   age: number;
 
@@ -73,7 +70,7 @@ export class Card {
   @Column({ name: "activity_retake", length: 100, nullable: true })
   activityRetake: string;
 
-  @Column({ name: "animal_id" })
+  @Column()
   animalId: number;
 
   @ManyToOne(() => Animal, (animal) => animal.cards, { onDelete: "CASCADE" })

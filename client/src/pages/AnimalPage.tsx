@@ -33,6 +33,7 @@ const AnimalPage = () => {
 
   useEffect(() => {
     getAnimal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAnimal = async () => {
@@ -59,15 +60,6 @@ const AnimalPage = () => {
   const deleteCard = async () => {
     if (animal?.id && cardAlert) {
       console.log("delete card");
-      // const response = await cardService.remove(client.id, animalAlert);
-
-      // if (response.ok) {
-      //   setClient({
-      //     ...client,
-      //     animals: client.animals.filter((animal) => animal.id !== animalAlert),
-      //   });
-      //   closeAnimalAlert();
-      // }
     }
   };
 

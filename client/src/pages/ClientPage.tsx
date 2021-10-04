@@ -38,6 +38,7 @@ const ClientPage = ({ match }: any) => {
 
   React.useEffect(() => {
     getClient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getClient = async () => {
