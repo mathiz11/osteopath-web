@@ -21,20 +21,21 @@ type LocationState = {
 type ParamsType = {
   clientId: string;
   animalId: string;
-  cardId?: string;
 };
 
 const CardEditPage = () => {
-  const [formValues, setFormValues] = useState<CardValues>(DEFAULT_CARD_VALUES);
+  const [formValues, setFormValues] = useState<CardValues | undefined>();
   const [, dispatch] = useStore();
   let history = useHistory<LocationState>();
-  let { clientId, animalId, cardId } = useParams<ParamsType>();
+  let { clientId, animalId } = useParams<ParamsType>();
 
   useEffect(() => {
-    if (cardId && history.location.state.formValues) {
-      setFormValues(history.location.state.formValues);
-    }
-  }, [cardId, history.location.state]);
+    setFormValues(
+      history.location.state
+        ? history.location.state.formValues
+        : DEFAULT_CARD_VALUES
+    );
+  }, [history.location.state]);
 
   const submitForm = async (values: CardValues) => {
     let formData;
@@ -44,12 +45,9 @@ const CardEditPage = () => {
       formData.append("file", values.schema as Blob);
     }
 
-    const response = await cardService.create(
-      clientId,
-      animalId,
-      values,
-      formData
-    );
+    const response = values.id
+      ? await cardService.update(clientId, animalId, values, formData)
+      : await cardService.create(clientId, animalId, values, formData);
 
     if (response.ok) {
       history.push(`/client/${clientId}/animal/${animalId}`);
@@ -69,170 +67,181 @@ const CardEditPage = () => {
     <Layout>
       <div className="card-edit">
         <div className="container">
-          <h1>Ajouter une fiche</h1>
-          <Formik
-            initialValues={formValues}
-            validateOnBlur={false}
-            validateOnChange={false}
-            validationSchema={CardSchema}
-            onSubmit={submitForm}
-          >
-            {({
-              values,
-              handleChange,
-              handleSubmit,
-              setFieldValue,
-              errors,
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <Message />
-                <Input
-                  id="age"
-                  label="Age"
-                  type="number"
-                  onChange={handleChange}
-                  value={values.age}
-                  error={errors.age}
-                  isRequired
-                />
-                <Input
-                  id="isCastrated"
-                  label="Castré ?"
-                  setFieldValue={setFieldValue}
-                  value={values.isCastrated}
-                  error={errors.isCastrated}
-                  isSwitch
-                  isRequired
-                />
-                <Input
-                  id="diet"
-                  label="Régime"
-                  onChange={handleChange}
-                  value={values.diet}
-                  error={errors.diet}
-                  isTextArea
-                />
-                <Input
-                  id="score"
-                  label="Score"
-                  setFieldValue={setFieldValue}
-                  value={values.score}
-                  error={errors.score}
-                  isNote
-                  isRequired
-                />
-                <Input
-                  id="discipline"
-                  label="Discipline"
-                  onChange={handleChange}
-                  value={values.discipline}
-                  error={errors.discipline}
-                  isTextArea
-                />
-                <Input
-                  id="lifestyle"
-                  label="Mode de vie"
-                  onChange={handleChange}
-                  value={values.lifestyle}
-                  error={errors.lifestyle}
-                  isTextArea
-                />
-                <Input
-                  id="antecedent"
-                  label="Antécédent"
-                  onChange={handleChange}
-                  value={values.antecedent}
-                  error={errors.antecedent}
-                  isTextArea
-                />
-                <Input
-                  id="dewormer"
-                  label="Vermifuge"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.dewormer}
-                  error={errors.dewormer}
-                />
-                <Input
-                  id="vaccine"
-                  label="Vaccin"
-                  onChange={handleChange}
-                  value={values.vaccine}
-                  error={errors.vaccine}
-                  isTextArea
-                />
-                <Input
-                  id="marshal"
-                  label="Maréchal"
-                  onChange={handleChange}
-                  value={values.marshal}
-                  error={errors.marshal}
-                  isTextArea
-                />
-                <Input
-                  id="dentistry"
-                  label="Dentisterie"
-                  onChange={handleChange}
-                  value={values.dentistry}
-                  error={errors.dentistry}
-                  isTextArea
-                />
-                <Input
-                  id="observation"
-                  label="Observation"
-                  onChange={handleChange}
-                  value={values.observation}
-                  error={errors.observation}
-                  isTextArea
-                />
-                <Input
-                  id="schema"
-                  label="Schéma"
-                  setFieldValue={setFieldValue}
-                  value={values.schema}
-                  error={errors.schema}
-                  isFile
-                />
-                <Input
-                  id="conclusion"
-                  label="Conclusion"
-                  onChange={handleChange}
-                  value={values.conclusion}
-                  error={errors.conclusion}
-                  isTextArea
-                />
-                <Input
-                  id="treatment"
-                  label="Traitement"
-                  onChange={handleChange}
-                  value={values.treatment}
-                  error={errors.treatment}
-                  isTextArea
-                />
-                <Input
-                  id="restTime"
-                  label="Temps de repos"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.restTime}
-                  error={errors.restTime}
-                />
-                <Input
-                  id="activityRetake"
-                  label="Reprise d'activité"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.activityRetake}
-                  error={errors.activityRetake}
-                />
-                <div className="center">
-                  <button type="submit" className="primary">
-                    Ajouter
-                  </button>
-                </div>
-              </form>
-            )}
-          </Formik>
+          <div className="header action-button">
+            <h1>
+              {history.location.state
+                ? "Modifier une fiche"
+                : "Ajouter une fiche"}
+            </h1>
+          </div>
+          {formValues && (
+            <Formik
+              initialValues={formValues}
+              validateOnBlur={false}
+              validateOnChange={false}
+              validationSchema={CardSchema}
+              onSubmit={submitForm}
+            >
+              {({
+                values,
+                handleChange,
+                handleSubmit,
+                setFieldValue,
+                errors,
+              }) => (
+                <form onSubmit={handleSubmit}>
+                  <Message />
+                  <Input
+                    id="age"
+                    label="Age"
+                    type="number"
+                    onChange={handleChange}
+                    value={values.age}
+                    error={errors.age}
+                    isRequired
+                  />
+                  <Input
+                    id="isCastrated"
+                    label="Castré ?"
+                    setFieldValue={setFieldValue}
+                    value={values.isCastrated}
+                    error={errors.isCastrated}
+                    isSwitch
+                    isRequired
+                  />
+                  <Input
+                    id="diet"
+                    label="Régime"
+                    onChange={handleChange}
+                    value={values.diet}
+                    error={errors.diet}
+                    isTextArea
+                  />
+                  <Input
+                    id="score"
+                    label="Score"
+                    setFieldValue={setFieldValue}
+                    value={values.score}
+                    error={errors.score}
+                    isNote
+                    isRequired
+                  />
+                  <Input
+                    id="discipline"
+                    label="Discipline"
+                    onChange={handleChange}
+                    value={values.discipline}
+                    error={errors.discipline}
+                    isTextArea
+                  />
+                  <Input
+                    id="lifestyle"
+                    label="Mode de vie"
+                    onChange={handleChange}
+                    value={values.lifestyle}
+                    error={errors.lifestyle}
+                    isTextArea
+                  />
+                  <Input
+                    id="antecedent"
+                    label="Antécédent"
+                    onChange={handleChange}
+                    value={values.antecedent}
+                    error={errors.antecedent}
+                    isTextArea
+                  />
+                  <Input
+                    id="dewormer"
+                    label="Vermifuge"
+                    type="text"
+                    onChange={handleChange}
+                    value={values.dewormer}
+                    error={errors.dewormer}
+                  />
+                  <Input
+                    id="vaccine"
+                    label="Vaccin"
+                    onChange={handleChange}
+                    value={values.vaccine}
+                    error={errors.vaccine}
+                    isTextArea
+                  />
+                  <Input
+                    id="marshal"
+                    label="Maréchal"
+                    onChange={handleChange}
+                    value={values.marshal}
+                    error={errors.marshal}
+                    isTextArea
+                  />
+                  <Input
+                    id="dentistry"
+                    label="Dentisterie"
+                    onChange={handleChange}
+                    value={values.dentistry}
+                    error={errors.dentistry}
+                    isTextArea
+                  />
+                  <Input
+                    id="observation"
+                    label="Observation"
+                    onChange={handleChange}
+                    value={values.observation}
+                    error={errors.observation}
+                    isTextArea
+                  />
+                  <Input
+                    id="schema"
+                    label="Schéma"
+                    setFieldValue={setFieldValue}
+                    value={{
+                      file: values.schema,
+                      filename: values.schemaFilename,
+                    }}
+                    error={errors.schema}
+                    isFile
+                  />
+                  <Input
+                    id="conclusion"
+                    label="Conclusion"
+                    onChange={handleChange}
+                    value={values.conclusion}
+                    error={errors.conclusion}
+                    isTextArea
+                  />
+                  <Input
+                    id="treatment"
+                    label="Traitement"
+                    onChange={handleChange}
+                    value={values.treatment}
+                    error={errors.treatment}
+                    isTextArea
+                  />
+                  <Input
+                    id="restTime"
+                    label="Temps de repos"
+                    type="text"
+                    onChange={handleChange}
+                    value={values.restTime}
+                    error={errors.restTime}
+                  />
+                  <Input
+                    id="activityRetake"
+                    label="Reprise d'activité"
+                    type="text"
+                    onChange={handleChange}
+                    value={values.activityRetake}
+                    error={errors.activityRetake}
+                  />
+                  <div className="center">
+                    <button type="submit" className="primary">
+                      {history.location.state ? "Modifier" : "Ajouter"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </Formik>
+          )}
         </div>
       </div>
     </Layout>

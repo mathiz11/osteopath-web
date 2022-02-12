@@ -79,7 +79,7 @@ const AnimalPage = () => {
   const openCardEdition = (cardId: number | undefined) => {
     if (cardId && animal) {
       history.push({
-        pathname: `/client/${clientId}/animal/${animalId}/card/edit/${cardId}`,
+        pathname: `/client/${clientId}/animal/${animalId}/card/${cardId}/edit`,
         state: {
           formValues: animal.cards
             .filter((card) => card.id === cardId)
@@ -131,6 +131,8 @@ const AnimalPage = () => {
                 cards={animal.cards}
                 editEvent={openCardEdition}
                 deleteEvent={openCardAlertToDelete}
+                clientId={clientId}
+                animalId={animalId}
               />
             </>
           )}

@@ -19,4 +19,5 @@ export type Card = {
   treatment: string;
   restTime: string;
   activityRetake: string;
+  animalId: string;
 };

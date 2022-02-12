@@ -45,7 +45,7 @@ const Routes = () => {
           isAuth={state.isAuth}
         />
         <PrivateRoute
-          path="/client/:clientId/animal/:animalId/card/edit/:cardId"
+          path="/client/:clientId/animal/:animalId/card/:cardId/edit"
           component={CardEditPage}
           isAuth={state.isAuth}
         />

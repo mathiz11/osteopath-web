@@ -18,15 +18,20 @@ body h2 {
   font-size: 30px;
 }
 
-.container {
-  padding: 3rem 1rem;
-}
-
 .container h1,
 .container h2,
 .container h3,
 .container h4 {
   margin: 0;
+}
+
+.main {
+  padding: 3rem 1rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* BUTTON OR LINK */
@@ -46,7 +51,6 @@ body a {
 button.primary,
 a.primary {
   color: #fff;
-  /* outline: none; */
   background-color: #7bbf99;
 }
 
