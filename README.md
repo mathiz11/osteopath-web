@@ -18,11 +18,17 @@ Pour stocker les schémas, le choix s'est porté sur Google Cloud Storage qui va
 
 ## Quelques images de l'application
 
-![Screenshot 1](https://github.com/mathiz11/osteopath-web/blob/main/images/screen1.jpg?raw=true)
+### Page de connexion
 
-![Screenshot 2](https://github.com/mathiz11/osteopath-web/blob/main/images/screen2.jpg?raw=true)
+![Screenshot 1](https://github.com/mathiz11/osteopath-web/blob/main/images/screen1.png?raw=true)
 
-![Screenshot 3](https://github.com/mathiz11/osteopath-web/blob/main/images/screen3.jpg?raw=true)
+### Page d'accueil
+
+![Screenshot 2](https://github.com/mathiz11/osteopath-web/blob/main/images/screen2.png?raw=true)
+
+### Page détail client
+
+![Screenshot 3](https://github.com/mathiz11/osteopath-web/blob/main/images/screen3.png?raw=true)
 
 ## Technologies utilisées
 
