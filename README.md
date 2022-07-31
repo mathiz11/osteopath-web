@@ -2,7 +2,7 @@
 
 Cette application a pour but de permettre à un ostéopathe animalier de pouvoir gérer ses différentes fiches de leurs patients.
 
-Les ostéopathes pourront ajouter des schémas à l'intérier de leur fiche patient.
+Les ostéopathes pourront ajouter des schémas à l'intérieur de leur fiche patient.
 
 ## Architecture
 
